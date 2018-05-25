@@ -25,8 +25,8 @@ namespace ResearchNow.SamplifyAPIClient
             if (body != null)
             {
                 data = Util.Serialize(body);
+                msg.Content = new StringContent(data, System.Text.Encoding.UTF8, "application/json");
             }
-            msg.Content = new StringContent(data, System.Text.Encoding.UTF8, "application/json");
             try
             {
                 var res = await client.SendAsync(msg).ConfigureAwait(false);
