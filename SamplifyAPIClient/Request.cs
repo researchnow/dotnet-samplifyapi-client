@@ -8,10 +8,14 @@ namespace ResearchNow.SamplifyAPIClient
 {
     internal class Request
     {
+        private HttpClient client;
+        internal Request()
+        {
+            client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        }
         internal async Task<APIResponse> Send(string host, HttpMethod method, string url, string accessToken, object body)
         {
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             if (!string.IsNullOrEmpty(accessToken))
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
@@ -25,8 +29,8 @@ namespace ResearchNow.SamplifyAPIClient
             msg.Content = new StringContent(data, System.Text.Encoding.UTF8, "application/json");
             try
             {
-                var res = await client.SendAsync(msg);
-                string json = await res.Content.ReadAsStringAsync();
+                var res = await client.SendAsync(msg).ConfigureAwait(false);
+                string json = await res.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var reqID = this.GetHeaderValue(res.Headers, "x-request-id");
                 if (!res.IsSuccessStatusCode)
                 {
