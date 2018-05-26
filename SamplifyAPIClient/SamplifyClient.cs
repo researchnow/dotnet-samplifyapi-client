@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace ResearchNow.SamplifyAPIClient
 {
@@ -33,218 +34,188 @@ namespace ResearchNow.SamplifyAPIClient
             this.Auth = new TokenResponse();
         }
 
-        public ProjectResponse CreateProject(CreateUpdateProjectCriteria project)
+        public async Task<ProjectResponse> CreateProject(CreateUpdateProjectCriteria project)
         {
-            Response res = new ProjectResponse();
-            this.RequestAndParseResponse(HttpMethod.Post, "/projects", project, ref res);
-            return (ProjectResponse)res;
+            return await this.RequestAndParseResponse<ProjectResponse>(HttpMethod.Post, "/projects", project).ConfigureAwait(false);
         }
 
-        public ProjectResponse UpdateProject(CreateUpdateProjectCriteria project)
+        public async Task<ProjectResponse> UpdateProject(CreateUpdateProjectCriteria project)
         {
-            Response res = new ProjectResponse();
             string path = string.Format("/projects/{0}", project.ExtProjectID);
-            this.RequestAndParseResponse(HttpMethod.Post, path, project, ref res);
-            return (ProjectResponse)res;
+            return await this.RequestAndParseResponse<ProjectResponse>(HttpMethod.Post, path, project).ConfigureAwait(false);
         }
 
-        public BuyProjectResponse BuyProject(string extProjectID, BuyProjectCriteria[] buy)
+        public async Task<BuyProjectResponse> BuyProject(string extProjectID, BuyProjectCriteria[] buy)
         {
-            Response res = new BuyProjectResponse();
             string path = string.Format("/projects/{0}/buy", extProjectID);
-            this.RequestAndParseResponse(HttpMethod.Post, path, buy, ref res);
-            return (BuyProjectResponse)res;
+            return await this.RequestAndParseResponse<BuyProjectResponse>(HttpMethod.Post, path, buy).ConfigureAwait(false);
         }
 
-        public CloseProjectResponse CloseProject(string extProjectID)
+        public async Task<CloseProjectResponse> CloseProject(string extProjectID)
         {
-            Response res = new CloseProjectResponse();
             string path = string.Format("/projects/{0}/buy", extProjectID);
-            this.RequestAndParseResponse(HttpMethod.Post, path, null, ref res);
-            return (CloseProjectResponse)res;
+            return await this.RequestAndParseResponse<CloseProjectResponse>(HttpMethod.Post, path, null).ConfigureAwait(false);
         }
 
-        public GetAllProjectsResponse GetAllProjects(QueryOptions options)
+        public async Task<GetAllProjectsResponse> GetAllProjects(QueryOptions options)
         {
-            Response res = new GetAllProjectsResponse();
             string query = "";
             if (options != null)
             {
                 query = options.ToString();
             }
             string path = string.Format("/projects{0}", query);
-            this.RequestAndParseResponse(HttpMethod.Get, path, null, ref res);
-            return (GetAllProjectsResponse)res;
+            return await this.RequestAndParseResponse<GetAllProjectsResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
 
-        public ProjectResponse GetProjectBy(string extProjectID)
+        public async Task<ProjectResponse> GetProjectBy(string extProjectID)
         {
-            Response res = new ProjectResponse();
             string path = string.Format("/projects/{0}", extProjectID);
-            this.RequestAndParseResponse(HttpMethod.Get, path, null, ref res);
-            return (ProjectResponse)res;
+            return await this.RequestAndParseResponse<ProjectResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
 
-        public ProjectReportResponse GetProjectReport(string extProjectID)
+        public async Task<ProjectReportResponse> GetProjectReport(string extProjectID)
         {
-            Response res = new ProjectReportResponse();
             string path = string.Format("/projects/{0}/report", extProjectID);
-            this.RequestAndParseResponse(HttpMethod.Get, path, null, ref res);
-            return (ProjectReportResponse)res;
+            return await this.RequestAndParseResponse<ProjectReportResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
 
-        public LineItemResponse AddLineItem(string extProjectID, LineItemCriteria lineItem)
+        public async Task<LineItemResponse> AddLineItem(string extProjectID, LineItemCriteria lineItem)
         {
-            Response res = new LineItemResponse();
             string path = string.Format("/projects/{0}/lineItems", extProjectID);
-            this.RequestAndParseResponse(HttpMethod.Post, path, lineItem, ref res);
-            return (LineItemResponse)res;
+            return await this.RequestAndParseResponse<LineItemResponse>(HttpMethod.Post, path, lineItem).ConfigureAwait(false);
         }
 
-        public LineItemResponse UpdateLineItem(string extProjectID, string extLineItemID, LineItemCriteria lineItem)
+        public async Task<LineItemResponse> UpdateLineItem(string extProjectID, string extLineItemID, LineItemCriteria lineItem)
         {
-            Response res = new LineItemResponse();
             string path = string.Format("/projects/{0}/lineItems/{1}", extProjectID, extLineItemID);
-            this.RequestAndParseResponse(HttpMethod.Post, path, lineItem, ref res);
-            return (LineItemResponse)res;
+            return await this.RequestAndParseResponse<LineItemResponse>(HttpMethod.Post, path, lineItem).ConfigureAwait(false);
         }
 
-        public UpdateLineItemStateResponse UpdateLineItemState(string extProjectID, string extLineItemID, string action)
+        public async Task<UpdateLineItemStateResponse> UpdateLineItemState(string extProjectID, string extLineItemID, string action)
         {
-            Response res = new UpdateLineItemStateResponse();
             string path = string.Format("/projects/{0}/lineItems/{1}/{2}", extProjectID, extLineItemID, action);
-            this.RequestAndParseResponse(HttpMethod.Post, path, null, ref res);
-            return (UpdateLineItemStateResponse)res;
+            return await this.RequestAndParseResponse<UpdateLineItemStateResponse>(HttpMethod.Post, path, null).ConfigureAwait(false);
         }
 
-        public GetAllLineItemsResponse GetAllLineItems(string extProjectID, QueryOptions options)
+        public async Task<GetAllLineItemsResponse> GetAllLineItems(string extProjectID, QueryOptions options)
         {
-            Response res = new GetAllLineItemsResponse();
             string query = "";
             if (options != null)
             {
                 query = options.ToString();
             }
             string path = string.Format("/projects/{0}/lineItems{1}", extProjectID, query);
-            this.RequestAndParseResponse(HttpMethod.Get, path, null, ref res);
-            return (GetAllLineItemsResponse)res;
+            return await this.RequestAndParseResponse<GetAllLineItemsResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
 
-        public LineItemResponse GetLineItemBy(string extProjectID, string extLineItemID)
+        public async Task<LineItemResponse> GetLineItemBy(string extProjectID, string extLineItemID)
         {
-            Response res = new LineItemResponse();
             string path = string.Format("/projects/{0}/lineItems/{1}", extProjectID, extLineItemID);
-            this.RequestAndParseResponse(HttpMethod.Get, path, null, ref res);
-            return (LineItemResponse)res;
+            return await this.RequestAndParseResponse<LineItemResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
 
-        public GetFeasibilityResponse GetFeasibility(string extProjectID, QueryOptions options)
+        public async Task<GetFeasibilityResponse> GetFeasibility(string extProjectID, QueryOptions options)
         {
-            Response res = new GetFeasibilityResponse();
             string query = "";
             if (options != null)
             {
                 query = options.ToString();
             }
             string path = string.Format("/projects/{0}/feasibility{1}", extProjectID, query);
-            this.RequestAndParseResponse(HttpMethod.Get, path, null, ref res);
-            return (GetFeasibilityResponse)res;
+            return await this.RequestAndParseResponse<GetFeasibilityResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
 
-        public GetCountriesResponse GetCountries(QueryOptions options)
+        public async Task<GetCountriesResponse> GetCountries(QueryOptions options)
         {
-            Response res = new GetCountriesResponse();
             string query = "";
             if (options != null)
             {
                 query = options.ToString();
             }
             string path = string.Format("/countries{0}", query);
-            this.RequestAndParseResponse(HttpMethod.Get, path, null, ref res);
-            return (GetCountriesResponse)res;
+            return await this.RequestAndParseResponse<GetCountriesResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
 
-        public GetAttributesResponse GetAttributes(string countryCode, string languageCode, QueryOptions options)
+        public async Task<GetAttributesResponse> GetAttributes(string countryCode, string languageCode, QueryOptions options)
         {
-            Response res = new GetAttributesResponse();
             string query = "";
             if (options != null)
             {
                 query = options.ToString();
             }
             string path = string.Format("/attributes/{0}/{1}{2}", countryCode, languageCode, query);
-            this.RequestAndParseResponse(HttpMethod.Get, path, null, ref res);
-            return (GetAttributesResponse)res;
+            return await this.RequestAndParseResponse<GetAttributesResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
 
-        public GetSurveyTopicsResponse GetSurveyTopics(QueryOptions options)
+        public async Task<GetSurveyTopicsResponse> GetSurveyTopics(QueryOptions options)
         {
-            Response res = new GetSurveyTopicsResponse();
             string query = "";
             if (options != null)
             {
                 query = options.ToString();
             }
             string path = string.Format("/categories/surveyTopics{0}", query);
-            this.RequestAndParseResponse(HttpMethod.Get, path, null, ref res);
-            return (GetSurveyTopicsResponse)res;
+            return await this.RequestAndParseResponse<GetSurveyTopicsResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
 
-        public TokenResponse GetAuth()
+        public async Task<TokenResponse> GetAuth()
         {
-            var r = Request.Send(this.AuthURL, HttpMethod.Post, "", "", Credentials).Result;
+            var r = await Request.Send(this.AuthURL, HttpMethod.Post, "", "", Credentials);
             return (TokenResponse)Util.Deserialize(r.Body, typeof(TokenResponse));
         }
 
-        private void RequestAndParseResponse(HttpMethod method, string url, object body, ref Response response)
+        private async Task<T> RequestAndParseResponse<T>(HttpMethod method, string url, object body) where T : Response, new()
         {
+            T response = new T();
             APIResponse api;
             try
             {
-                api = this.Fetch(method, url, body);
+                api = await this.Fetch(method, url, body).ConfigureAwait(false);
             }
             catch (Exception e)
             {
                 response.Fail(e);
-                return;
+                return response;
             }
             if (api.HasError)
             {
                 try
                 {
-                    response = (Response)Util.Deserialize(api.Body, response.GetType());
+                    response = (T)Util.Deserialize(api.Body, response.GetType());
                 }
                 catch (Exception e)
                 {
                     response.Fail(e);
                 }
                 response.SetHTTPErrorResponse(api.Error);
-                return;
+                return response;
             }
             try
             {
-                response = (Response)Util.Deserialize(api.Body, response.GetType());
+                response = (T)Util.Deserialize(api.Body, response.GetType());
+                return response;
             }
             catch (Exception e)
             {
                 response.Fail(e);
-                return;
+                return response;
             }
         }
 
-        private APIResponse Fetch(HttpMethod method, string url, object body)
+        private async Task<APIResponse> Fetch(HttpMethod method, string url, object body)
         {
             if (this.Auth.AccessTokenExpired)
             {
-                this.RequestAndParseToken();
+                await this.RequestAndParseToken().ConfigureAwait(false);
             }
             try
             {
-                var ar = Request.Send(this.APIBaseURL, method, url, this.Auth.AccessToken, body).Result;
+                var ar = await Request.Send(this.APIBaseURL, method, url, this.Auth.AccessToken, body).ConfigureAwait(false);
                 if (ar.Unauthorized)
                 {
-                    this.RequestAndParseToken();
-                    return Request.Send(this.APIBaseURL, method, url, this.Auth.AccessToken, body).Result;
+                    await this.RequestAndParseToken().ConfigureAwait(false);
+                    return await Request.Send(this.APIBaseURL, method, url, this.Auth.AccessToken, body).ConfigureAwait(false);
                 }
                 return ar;
             }
@@ -254,12 +225,12 @@ namespace ResearchNow.SamplifyAPIClient
             }
         }
 
-        private void RequestAndParseToken()
+        private async Task RequestAndParseToken()
         {
             var t = DateTime.Now;
             try
             {
-                var ar = Request.Send(this.AuthURL, HttpMethod.Post, "", "", Credentials).Result;
+                var ar = await Request.Send(this.AuthURL, HttpMethod.Post, "", "", Credentials).ConfigureAwait(false);
                 this.Auth = (TokenResponse)Util.Deserialize(ar.Body, typeof(TokenResponse));
             }
             catch (Exception e)

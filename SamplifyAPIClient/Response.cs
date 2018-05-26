@@ -16,6 +16,8 @@ namespace ResearchNow.SamplifyAPIClient
     [DataContract]
     public class Response
     {
+        internal Response() { }
+
         [DataMember(Name = "status")]
         public ResponseStatus ResponseStatus { get; set; }
         [IgnoreDataMember]
