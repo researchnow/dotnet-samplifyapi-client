@@ -15,6 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\go\src\github.com\researchnow\dotnet-samplifyapi-client\SamplifyAPIClient\SamplifyAPIClient.csproj" />
+    <ProjectReference Include="..\SamplifyAPIClient\SamplifyAPIClient.csproj" />
   </ItemGroup>
 </Project>

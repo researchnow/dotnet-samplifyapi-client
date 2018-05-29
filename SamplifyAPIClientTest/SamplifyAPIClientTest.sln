@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SamplifyAPIClientTest", "SamplifyAPIClientTest.csproj", "{575689BD-9D8F-4006-80B6-08E70F0D792D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SamplifyAPIClient", "..\..\go\src\github.com\researchnow\dotnet-samplifyapi-client\SamplifyAPIClient\SamplifyAPIClient.csproj", "{0462E0E6-1792-4D7B-85ED-798094396F3E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SamplifyAPIClient", "..\SamplifyAPIClient\SamplifyAPIClient.csproj", "{0462E0E6-1792-4D7B-85ED-798094396F3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
