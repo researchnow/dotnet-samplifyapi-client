@@ -8,7 +8,7 @@ namespace ResearchNow.SamplifyAPIClient
     {
         UAT = 0, //Use uat environment
         Prod = 1, //Use prod environment
-        CheckProcessEnv = 3, //Check process environment variable 'env' to determine. (default = dev)
+        CheckProcessEnv = 3, //Check process environment variable 'env' to determine. (default = uat)
     }
 
     public class SamplifyClient
@@ -34,6 +34,16 @@ namespace ResearchNow.SamplifyAPIClient
             this.Auth = new TokenResponse();
         }
 
+        // Used for unit testing
+        public SamplifyClient(HttpClient testClient)
+        {
+            this.APIBaseURL = "http://172.0.0.1";
+            this.AuthURL = "http://172.0.0.1/auth/v1/token/password";
+            this.Credentials = new TokenRequest("", "", "");
+            this.Request = new Request(testClient);
+            this.Auth = new TokenResponse();
+        }
+
         public async Task<ProjectResponse> CreateProject(CreateUpdateProjectCriteria project)
         {
             return await this.RequestAndParseResponse<ProjectResponse>(HttpMethod.Post, "/projects", project).ConfigureAwait(false);
@@ -53,7 +63,7 @@ namespace ResearchNow.SamplifyAPIClient
 
         public async Task<CloseProjectResponse> CloseProject(string extProjectID)
         {
-            string path = string.Format("/projects/{0}/buy", extProjectID);
+            string path = string.Format("/projects/{0}/close", extProjectID);
             return await this.RequestAndParseResponse<CloseProjectResponse>(HttpMethod.Post, path, null).ConfigureAwait(false);
         }
 

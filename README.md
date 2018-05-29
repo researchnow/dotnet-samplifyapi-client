@@ -101,22 +101,22 @@ Following is a list of filtering/sorting field values:
 
 ## Supported API functions
 
-* public async Task<ProjectResponse> CreateProject(CreateUpdateProjectCriteria project)
-* public async Task<ProjectResponse> UpdateProject(CreateUpdateProjectCriteria project)
-* public async Task<BuyProjectResponse> BuyProject(string extProjectID, BuyProjectCriteria[] buy)
-* public async Task<CloseProjectResponse> CloseProject(string extProjectID)
-* public async Task<GetAllProjectsResponse> GetAllProjects(QueryOptions options)
-* public async Task<ProjectResponse> GetProjectBy(string extProjectID)
-* public async Task<ProjectReportResponse> GetProjectReport(string extProjectID)
-* public async Task<LineItemResponse> AddLineItem(string extProjectID, LineItemCriteria lineItem)
-* public async Task<LineItemResponse> UpdateLineItem(string extProjectID, string extLineItemID, LineItemCriteria lineItem)
-* public async Task<UpdateLineItemStateResponse> UpdateLineItemState(string extProjectID, string extLineItemID, string action)
-* public async Task<GetAllLineItemsResponse> GetAllLineItems(string extProjectID, QueryOptions options)
-* public async Task<LineItemResponse> GetLineItemBy(string extProjectID, string extLineItemID)
-* public async Task<GetFeasibilityResponse> GetFeasibility(string extProjectID, QueryOptions options)
-* public async Task<GetCountriesResponse> GetCountries(QueryOptions options)
-* public async Task<GetAttributesResponse> GetAttributes(string countryCode, string languageCode, QueryOptions options)
-* public async Task<GetSurveyTopicsResponse> GetSurveyTopics(QueryOptions options)
+* `public async Task<ProjectResponse> CreateProject(CreateUpdateProjectCriteria project)`
+* `public async Task<ProjectResponse> UpdateProject(CreateUpdateProjectCriteria project)`
+* `public async Task<BuyProjectResponse> BuyProject(string extProjectID, BuyProjectCriteria[] buy)`
+* `public async Task<CloseProjectResponse> CloseProject(string extProjectID)`
+* `public async Task<GetAllProjectsResponse> GetAllProjects(QueryOptions options)`
+* `public async Task<ProjectResponse> GetProjectBy(string extProjectID)`
+* `public async Task<ProjectReportResponse> GetProjectReport(string extProjectID)`
+* `public async Task<LineItemResponse> AddLineItem(string extProjectID, LineItemCriteria lineItem)`
+* `public async Task<LineItemResponse> UpdateLineItem(string extProjectID, string extLineItemID, LineItemCriteria lineItem)`
+* `public async Task<UpdateLineItemStateResponse> UpdateLineItemState(string extProjectID, string extLineItemID, string action)`
+* `public async Task<GetAllLineItemsResponse> GetAllLineItems(string extProjectID, QueryOptions options)`
+* `public async Task<LineItemResponse> GetLineItemBy(string extProjectID, string extLineItemID)`
+* `public async Task<GetFeasibilityResponse> GetFeasibility(string extProjectID, QueryOptions options)`
+* `public async Task<GetCountriesResponse> GetCountries(QueryOptions options)`
+* `public async Task<GetAttributesResponse> GetAttributes(string countryCode, string languageCode, QueryOptions options)`
+* `public async Task<GetSurveyTopicsResponse> GetSurveyTopics(QueryOptions options)`
 
 ## Versioning
 

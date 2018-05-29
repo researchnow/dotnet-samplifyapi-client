@@ -12,9 +12,26 @@ namespace ResearchNow.SamplifyAPIClient
     public class Sort
     {
         public string Field { get; set; }
-        public SortDirection Direction { get; set; }
+        public SortDirection Direction
+        {
+            set
+            {
+                switch (value)
+                {
+                    case SortDirection.Asc:
+                        this.DirectionToken = "asc";
+                        break;
+                    case SortDirection.Desc:
+                        this.DirectionToken = "desc";
+                        break;
+                    default:
+                        this.DirectionToken = "asc";
+                        break;
+                }
+            }
+        }
+        internal string DirectionToken { get; set; }
 
-        public Sort() { }
         public Sort(string field, SortDirection direction)
         {
             this.Field = field;
@@ -28,7 +45,6 @@ namespace ResearchNow.SamplifyAPIClient
         public string Field { get; set; }
         public object Value { get; set; }
 
-        public Filter() { }
         public Filter(string field, object value)
         {
             this.Field = field;
@@ -76,7 +92,7 @@ namespace ResearchNow.SamplifyAPIClient
 
                 foreach (var s in this.SortBy)
                 {
-                    query = string.Format("{0}{1}{2}:{3}", query, sep, s.Field, s.Direction);
+                    query = string.Format("{0}{1}{2}:{3}", query, sep, s.Field, s.DirectionToken);
                     sep = ",";
                 }
             }

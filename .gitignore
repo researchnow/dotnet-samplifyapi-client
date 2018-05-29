@@ -3,6 +3,8 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+SamplifyAPIClient/*.sln
+
 # User-specific files
 *.suo
 *.user
@@ -57,7 +59,6 @@ artifacts/
 StyleCopReport.xml
 
 # Files built by Visual Studio
-*.sln
 *_i.c
 *_p.c
 *_i.h

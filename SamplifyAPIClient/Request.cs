@@ -14,6 +14,11 @@ namespace ResearchNow.SamplifyAPIClient
             client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
+        internal Request(HttpClient httpClient)
+        {
+            this.client = httpClient;
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        }
         internal async Task<APIResponse> Send(string host, HttpMethod method, string url, string accessToken, object body)
         {
             if (!string.IsNullOrEmpty(accessToken))
