@@ -31,7 +31,7 @@ namespace SamplifyAPIClientTest
             var messages = new List<HttpRequestMessage>();
             string[] tests = new string[]{
                 "/projects",
-                "/projects/update-test",
+                "/projects/project001",
                 "/projects/buy-test/buy",
                 "/projects/close-test/close",
                 "/projects",
@@ -52,20 +52,15 @@ namespace SamplifyAPIClientTest
                 messages.Add(request);
             });
 
-            var project = new CreateUpdateProjectCriteria();
-            project.ExtProjectID = "update-test";
-            var lineItem = new LineItemCriteria();
-            lineItem.ExtLineItemID = "test-lineitem-id";
-
-            testClient.CreateProject(project).Wait();
-            testClient.UpdateProject(project).Wait();
-            testClient.BuyProject("buy-test", null).Wait();
+            testClient.CreateProject(Helper.GetTestProject()).Wait();
+            testClient.UpdateProject(Helper.GetTestProject()).Wait();
+            testClient.BuyProject("buy-test", Helper.GetTestBuyProjectCriteria()).Wait();
             testClient.CloseProject("close-test").Wait();
             testClient.GetAllProjects(null).Wait();
             testClient.GetProjectBy("test-prj-id").Wait();
             testClient.GetProjectReport("test-report-id").Wait();
-            testClient.AddLineItem("test", lineItem).Wait();
-            testClient.UpdateLineItem("test-prj-id", "test-lineitem-id", lineItem).Wait();
+            testClient.AddLineItem("test", Helper.GetTestLineItem()).Wait();
+            testClient.UpdateLineItem("test-prj-id", "test-lineitem-id", Helper.GetTestLineItem()).Wait();
             testClient.UpdateLineItemState("test-prj-id", "test-lineitem-id", ActionConstants.ActionPaused).Wait();
             testClient.GetAllLineItems("test-prj-id", null).Wait();
             testClient.GetLineItemBy("test-prj-id", "test-lineitem-id").Wait();

@@ -37,8 +37,8 @@ namespace ResearchNow.SamplifyAPIClient
         // Used for unit testing
         public SamplifyClient(HttpClient testClient)
         {
-            this.APIBaseURL = "http://172.0.0.1";
-            this.AuthURL = "http://172.0.0.1/auth/v1/token/password";
+            this.APIBaseURL = HostConstants.UnitTextAPIBaseURL;
+            this.AuthURL = HostConstants.UnitTextAuthURL;
             this.Credentials = new TokenRequest("", "", "");
             this.Request = new Request(testClient);
             this.Auth = new TokenResponse();
@@ -46,23 +46,35 @@ namespace ResearchNow.SamplifyAPIClient
 
         public async Task<ProjectResponse> CreateProject(CreateUpdateProjectCriteria project)
         {
+            Validator.IsNotNull(project);
+            Validator.Validate(project);
             return await this.RequestAndParseResponse<ProjectResponse>(HttpMethod.Post, "/projects", project).ConfigureAwait(false);
         }
 
         public async Task<ProjectResponse> UpdateProject(CreateUpdateProjectCriteria project)
         {
+            Validator.IsNotNull(project);
+            Validator.IsNonEmptyString(project.ExtProjectID);
+            Validator.IsEmail(project.NotificationEmails);
+            Validator.IsDeviceType(project.Devices);
+
             string path = string.Format("/projects/{0}", project.ExtProjectID);
             return await this.RequestAndParseResponse<ProjectResponse>(HttpMethod.Post, path, project).ConfigureAwait(false);
         }
 
         public async Task<BuyProjectResponse> BuyProject(string extProjectID, BuyProjectCriteria[] buy)
         {
+            Validator.IsNonEmptyString(extProjectID);
+            Validator.IsNotNull(buy);
+            Validator.ValidateAll(buy);
+
             string path = string.Format("/projects/{0}/buy", extProjectID);
             return await this.RequestAndParseResponse<BuyProjectResponse>(HttpMethod.Post, path, buy).ConfigureAwait(false);
         }
 
         public async Task<CloseProjectResponse> CloseProject(string extProjectID)
         {
+            Validator.IsNonEmptyString(extProjectID);
             string path = string.Format("/projects/{0}/close", extProjectID);
             return await this.RequestAndParseResponse<CloseProjectResponse>(HttpMethod.Post, path, null).ConfigureAwait(false);
         }
@@ -80,36 +92,50 @@ namespace ResearchNow.SamplifyAPIClient
 
         public async Task<ProjectResponse> GetProjectBy(string extProjectID)
         {
+            Validator.IsNonEmptyString(extProjectID);
             string path = string.Format("/projects/{0}", extProjectID);
             return await this.RequestAndParseResponse<ProjectResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
 
         public async Task<ProjectReportResponse> GetProjectReport(string extProjectID)
         {
+            Validator.IsNonEmptyString(extProjectID);
             string path = string.Format("/projects/{0}/report", extProjectID);
             return await this.RequestAndParseResponse<ProjectReportResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
 
         public async Task<LineItemResponse> AddLineItem(string extProjectID, LineItemCriteria lineItem)
         {
+            Validator.IsNonEmptyString(extProjectID);
+            Validator.IsNotNull(lineItem);
+            Validator.Validate(lineItem);
+
             string path = string.Format("/projects/{0}/lineItems", extProjectID);
             return await this.RequestAndParseResponse<LineItemResponse>(HttpMethod.Post, path, lineItem).ConfigureAwait(false);
         }
 
         public async Task<LineItemResponse> UpdateLineItem(string extProjectID, string extLineItemID, LineItemCriteria lineItem)
         {
+            Validator.IsNonEmptyString(extProjectID, extLineItemID);
+            Validator.IsNotNull(lineItem);
+            Validator.Validate(lineItem);
+
             string path = string.Format("/projects/{0}/lineItems/{1}", extProjectID, extLineItemID);
             return await this.RequestAndParseResponse<LineItemResponse>(HttpMethod.Post, path, lineItem).ConfigureAwait(false);
         }
 
         public async Task<UpdateLineItemStateResponse> UpdateLineItemState(string extProjectID, string extLineItemID, string action)
         {
+            Validator.IsNonEmptyString(extProjectID, extLineItemID, action);
+            Validator.IsActionOrNull(action);
+
             string path = string.Format("/projects/{0}/lineItems/{1}/{2}", extProjectID, extLineItemID, action);
             return await this.RequestAndParseResponse<UpdateLineItemStateResponse>(HttpMethod.Post, path, null).ConfigureAwait(false);
         }
 
         public async Task<GetAllLineItemsResponse> GetAllLineItems(string extProjectID, QueryOptions options)
         {
+            Validator.IsNonEmptyString(extProjectID);
             string query = "";
             if (options != null)
             {
@@ -121,12 +147,14 @@ namespace ResearchNow.SamplifyAPIClient
 
         public async Task<LineItemResponse> GetLineItemBy(string extProjectID, string extLineItemID)
         {
+            Validator.IsNonEmptyString(extProjectID, extLineItemID);
             string path = string.Format("/projects/{0}/lineItems/{1}", extProjectID, extLineItemID);
             return await this.RequestAndParseResponse<LineItemResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
 
         public async Task<GetFeasibilityResponse> GetFeasibility(string extProjectID, QueryOptions options)
         {
+            Validator.IsNonEmptyString(extProjectID);
             string query = "";
             if (options != null)
             {
@@ -149,6 +177,10 @@ namespace ResearchNow.SamplifyAPIClient
 
         public async Task<GetAttributesResponse> GetAttributes(string countryCode, string languageCode, QueryOptions options)
         {
+            Validator.IsNonEmptyString(countryCode, languageCode);
+            Validator.IsCountryCodeOrNull(countryCode);
+            Validator.IsLanguageCodeOrNull(languageCode);
+
             string query = "";
             if (options != null)
             {
@@ -219,20 +251,13 @@ namespace ResearchNow.SamplifyAPIClient
             {
                 await this.RequestAndParseToken().ConfigureAwait(false);
             }
-            try
+            var ar = await Request.Send(this.APIBaseURL, method, url, this.Auth.AccessToken, body).ConfigureAwait(false);
+            if (ar.Unauthorized)
             {
-                var ar = await Request.Send(this.APIBaseURL, method, url, this.Auth.AccessToken, body).ConfigureAwait(false);
-                if (ar.Unauthorized)
-                {
-                    await this.RequestAndParseToken().ConfigureAwait(false);
-                    return await Request.Send(this.APIBaseURL, method, url, this.Auth.AccessToken, body).ConfigureAwait(false);
-                }
-                return ar;
+                await this.RequestAndParseToken().ConfigureAwait(false);
+                return await Request.Send(this.APIBaseURL, method, url, this.Auth.AccessToken, body).ConfigureAwait(false);
             }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            return ar;
         }
 
         private async Task RequestAndParseToken()
@@ -243,10 +268,10 @@ namespace ResearchNow.SamplifyAPIClient
                 var ar = await Request.Send(this.AuthURL, HttpMethod.Post, "", "", Credentials).ConfigureAwait(false);
                 this.Auth = (TokenResponse)Util.Deserialize(ar.Body, typeof(TokenResponse));
             }
-            catch (Exception e)
+            catch
             {
                 this.Auth = new TokenResponse();
-                throw e;
+                throw;
             }
             this.Auth.Acquired = t;
         }
@@ -279,6 +304,8 @@ namespace ResearchNow.SamplifyAPIClient
             internal const string ProdAPIBaseURL = "https://api.researchnow.com/sample/v1";
             internal const string UATAuthURL = "https://api.uat.pe.researchnow.com/auth/v1/token/password";
             internal const string UATAPIBaseURL = "https://api.uat.pe.researchnow.com/sample/v1";
+            internal const string UnitTextAPIBaseURL = "http://172.0.0.1";
+            internal const string UnitTextAuthURL = "http://172.0.0.1/auth/v1/token/password";
         }
     }
 }

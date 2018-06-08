@@ -19,12 +19,17 @@ namespace ResearchNow.SamplifyAPIClient
     }
 
     [DataContract]
-    public class QuotaPlan
+    public class QuotaPlan : IValidator
     {
         [DataMember(Name = "filters")]
         public QuotaFilters[] Filters { get; set; }
         [DataMember(Name = "quotaGroups")]
         public QuotaGroup[] QuotaGroups { get; set; }
+
+        void IValidator.IsValid()
+        {
+            Validator.IsNotNull(this.Filters, this.QuotaGroups);
+        }
     }
 
     [DataContract]
@@ -119,7 +124,7 @@ namespace ResearchNow.SamplifyAPIClient
 
     // LineItemCriteria has the fields to create or update a Line Item.
     [DataContract]
-    public class LineItemCriteria
+    public class LineItemCriteria : IValidator
     {
         [DataMember(Name = "extLineItemId")]
         public string ExtLineItemID { get; set; }
@@ -143,6 +148,21 @@ namespace ResearchNow.SamplifyAPIClient
         public int RequiredCompletes { get; set; }
         [DataMember(Name = "quotaPlan")]
         public QuotaPlan QuotaPlan { get; set; }
+
+        void IValidator.IsValid()
+        {
+            Validator.IsNonEmptyString(this.ExtLineItemID, this.Title, this.CountryISOCode, this.LanguageISOCode);
+            Validator.IsCountryCodeOrNull(this.CountryISOCode);
+            Validator.IsLanguageCodeOrNull(this.LanguageISOCode);
+            Validator.IsUrlOrNull(this.SurveyURL);
+            Validator.IsUrlOrNull(this.SurveyTestURL);
+            Validator.IsNonZero<decimal>(this.IndicativeIncidence);
+            Validator.IsNonZero<int>(this.DaysInField);
+            Validator.IsNonZero<int>(this.LengthOfInterview);
+            Validator.IsNonZero<int>(this.RequiredCompletes);
+            Validator.IsNotNull(this.QuotaPlan);
+            Validator.Validate(this.QuotaPlan);
+        }
     }
 
     [DataContract]
