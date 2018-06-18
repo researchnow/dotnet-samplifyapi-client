@@ -266,6 +266,10 @@ namespace ResearchNow.SamplifyAPIClient
             try
             {
                 var ar = await Request.Send(this.AuthURL, HttpMethod.Post, "", "", Credentials).ConfigureAwait(false);
+                if (ar.HasError)
+                {
+                    throw new SamplifyAuthenticationException();
+                }
                 this.Auth = (TokenResponse)Util.Deserialize(ar.Body, typeof(TokenResponse));
             }
             catch

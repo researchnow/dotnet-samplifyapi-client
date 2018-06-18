@@ -90,17 +90,17 @@ namespace ResearchNow.SamplifyAPIClient
     {
         [DataMember(Name = "extProjectId")]
         public string ExtProjectID { get; set; }
-        [DataMember(Name = "title")]
+        [DataMember(Name = "title", EmitDefaultValue = false)]
         public string Title { get; set; }
-        [DataMember(Name = "notificationEmails")]
+        [DataMember(Name = "notificationEmails", EmitDefaultValue = false)]
         public string[] NotificationEmails { get; set; }
-        [DataMember(Name = "devices")]
+        [DataMember(Name = "devices", EmitDefaultValue = false)]
         public string[] Devices { get; set; }
-        [DataMember(Name = "category")]
+        [DataMember(Name = "category", EmitDefaultValue = false)]
         public Category Category { get; set; }
-        [DataMember(Name = "lineItems")]
+        [DataMember(Name = "lineItems", EmitDefaultValue = false)]
         public LineItemCriteria[] LineItems { get; set; }
-        [DataMember(Name = "exclusions")]
+        [DataMember(Name = "exclusions", EmitDefaultValue = false)]
         public Exclusions Exclusions { get; set; }
 
         void IValidator.IsValid()

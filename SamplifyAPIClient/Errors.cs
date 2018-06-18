@@ -10,4 +10,23 @@ namespace ResearchNow.SamplifyAPIClient
         public int HTTPCode { get; set; }
         public string HTTPPhrase { get; set; }
     }
+
+    public class SamplifyAuthenticationException : Exception
+    {
+        private const string _defaultMessage = "Authentication attempt failed.";
+        public SamplifyAuthenticationException()
+            : base(_defaultMessage)
+        {
+        }
+
+        public SamplifyAuthenticationException(string message)
+            : base(message)
+        {
+        }
+
+        public SamplifyAuthenticationException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+    }
 }

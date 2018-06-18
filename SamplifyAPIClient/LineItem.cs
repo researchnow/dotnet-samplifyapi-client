@@ -128,25 +128,25 @@ namespace ResearchNow.SamplifyAPIClient
     {
         [DataMember(Name = "extLineItemId")]
         public string ExtLineItemID { get; set; }
-        [DataMember(Name = "title")]
+        [DataMember(Name = "title", EmitDefaultValue = false)]
         public string Title { get; set; }
-        [DataMember(Name = "countryISOCode")]
+        [DataMember(Name = "countryISOCode", EmitDefaultValue = false)]
         public string CountryISOCode { get; set; }
-        [DataMember(Name = "languageISOCode")]
+        [DataMember(Name = "languageISOCode", EmitDefaultValue = false)]
         public string LanguageISOCode { get; set; }
-        [DataMember(Name = "surveyURL")]
+        [DataMember(Name = "surveyURL", EmitDefaultValue = false)]
         public string SurveyURL { get; set; }
-        [DataMember(Name = "surveyTestURL")]
+        [DataMember(Name = "surveyTestURL", EmitDefaultValue = false)]
         public string SurveyTestURL { get; set; }
-        [DataMember(Name = "indicativeIncidence")]
+        [DataMember(Name = "indicativeIncidence", EmitDefaultValue = false)]
         public decimal IndicativeIncidence { get; set; }
-        [DataMember(Name = "daysInField")]
+        [DataMember(Name = "daysInField", EmitDefaultValue = false)]
         public int DaysInField { get; set; }
-        [DataMember(Name = "lengthOfInterview")]
+        [DataMember(Name = "lengthOfInterview", EmitDefaultValue = false)]
         public int LengthOfInterview { get; set; }
-        [DataMember(Name = "requiredCompletes")]
+        [DataMember(Name = "requiredCompletes", EmitDefaultValue = false)]
         public int RequiredCompletes { get; set; }
-        [DataMember(Name = "quotaPlan")]
+        [DataMember(Name = "quotaPlan", EmitDefaultValue = false)]
         public QuotaPlan QuotaPlan { get; set; }
 
         void IValidator.IsValid()
