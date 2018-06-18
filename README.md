@@ -67,10 +67,10 @@ In the above example, the `await` operator is applied to `GetAllProjects` (async
 
 ## Filtering & Sorting
 
-All client functions that take `QueryOptions` parameter, support filtering and sorting. Nested fields are not supported for filtering and sorting operations.
+All client functions that take `QueryOptions` parameter, support filtering/sorting & pagination. Nested fields are not supported for filtering and sorting operations. Default `limit` value is set to 10 but values up to 50 are permitted.
 
 ```
-var options = new QueryOptions();
+var options = new QueryOptions(10, 5); //offset=10, limit=5
 
 options.AddFilter("title", "Test Survey");
 options.AddFilter("state", StateConstants.Provisioned);
@@ -118,6 +118,8 @@ Following is a list of filtering/sorting field values:
 * `public async Task<GetCountriesResponse> GetCountries(QueryOptions options)`
 * `public async Task<GetAttributesResponse> GetAttributes(string countryCode, string languageCode, QueryOptions options)`
 * `public async Task<GetSurveyTopicsResponse> GetSurveyTopics(QueryOptions options)`
+* `public async Task<bool> RefreshToken()`
+* `public async Task<bool> Logout()`
 
 ## Versioning
 
