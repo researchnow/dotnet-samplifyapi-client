@@ -72,9 +72,9 @@ namespace ResearchNow.SamplifyAPIClient
         public Exclusions Exclusions { get; set; }
     }
 
-    // CreateUpdateProjectCriteria has the fields to create or update a project.
+    // ProjectCriteria has the fields to create or update a project.
     [DataContract]
-    public class CreateUpdateProjectCriteria
+    public class ProjectCriteria
     {
         [DataMember(Name = "extProjectId")]
         public string ExtProjectID { get; set; }

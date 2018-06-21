@@ -102,8 +102,8 @@ Following is a list of filtering/sorting field values:
 
 ## Supported API functions
 
-* `public async Task<ProjectResponse> CreateProject(CreateUpdateProjectCriteria project)`
-* `public async Task<ProjectResponse> UpdateProject(CreateUpdateProjectCriteria project)`
+* `public async Task<ProjectResponse> CreateProject(ProjectCriteria project)`
+* `public async Task<ProjectResponse> UpdateProject(ProjectCriteria project)`
 * `public async Task<BuyProjectResponse> BuyProject(string extProjectID, BuyProjectCriteria[] buy)`
 * `public async Task<CloseProjectResponse> CloseProject(string extProjectID)`
 * `public async Task<GetAllProjectsResponse> GetAllProjects(QueryOptions options)`

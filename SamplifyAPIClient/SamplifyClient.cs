@@ -44,12 +44,12 @@ namespace ResearchNow.SamplifyAPIClient
             this.Auth = new TokenResponse();
         }
 
-        public async Task<ProjectResponse> CreateProject(CreateUpdateProjectCriteria project)
+        public async Task<ProjectResponse> CreateProject(ProjectCriteria project)
         {
             return await this.RequestAndParseResponse<ProjectResponse>(HttpMethod.Post, "/projects", project).ConfigureAwait(false);
         }
 
-        public async Task<ProjectResponse> UpdateProject(CreateUpdateProjectCriteria project)
+        public async Task<ProjectResponse> UpdateProject(ProjectCriteria project)
         {
             string path = string.Format("/projects/{0}", project.ExtProjectID);
             return await this.RequestAndParseResponse<ProjectResponse>(HttpMethod.Post, path, project).ConfigureAwait(false);
