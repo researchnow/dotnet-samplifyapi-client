@@ -59,7 +59,7 @@ namespace ResearchNow.SamplifyAPIClient
     {
         [DataMember(Name = "attributeId")]
         public string AttributeID { get; set; }
-        [DataMember(Name = "optionIds")]
+        [DataMember(Name = "options")]
         public string[] OptionIDs { get; set; }
     }
 
