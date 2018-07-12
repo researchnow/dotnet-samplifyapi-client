@@ -210,15 +210,31 @@ namespace ResearchNow.SamplifyAPIClient
         public string Status { get; set; }
         [DataMember(Name = "costPerInterview")]
         public decimal CostPerInterview { get; set; }
-        [DataMember(Name = "expiry")]
-        public string RawDTStringExpiry { get; set; }
         [DataMember(Name = "currency")]
         public string Currency { get; set; }
         [DataMember(Name = "feasible")]
         public bool Feasible { get; set; }
+        [DataMember(Name = "totalCount")]
+        public int TotalCount { get; set; }
 
-        [IgnoreDataMember]
-        public DateTime? Expiry => Util.ConvertToDateTimeNullable(RawDTStringExpiry);
+        [DataMember(Name = "valueCounts")]
+        public ValueCount[] ValueCounts { get; set; }
+    }
+
+    [DataContract]
+    public class ValueCount
+    {
+        [DataMember(Name = "quotaCells")]
+        public FeasibilityQuotaCell[] QuotaCells { get; set; }
+    }
+
+    [DataContract]
+    public class FeasibilityQuotaCell
+    {
+        [DataMember(Name = "feasibilityCount")]
+        public int FeasibilityCount { get; set; }
+        [DataMember(Name = "quotaNodes")]
+        public QuotaNode[] QuotaNodes { get; set; }
     }
 
     // Supported attribute for a country and language. Required to build up the Quota Plan.
