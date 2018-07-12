@@ -52,7 +52,7 @@ namespace SamplifyAPIClientTest
                 messages.Add(request);
             });
 
-            var project = new CreateUpdateProjectCriteria();
+            var project = new ProjectCriteria();
             project.ExtProjectID = "update-test";
             var lineItem = new LineItemCriteria();
             lineItem.ExtLineItemID = "test-lineitem-id";
