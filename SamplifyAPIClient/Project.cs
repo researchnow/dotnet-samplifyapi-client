@@ -30,20 +30,32 @@ namespace ResearchNow.SamplifyAPIClient
 
     // Project's category
     [DataContract]
-    public class Category
+    public class Category : IValidator
     {
         [DataMember(Name = "surveyTopic")]
         public string[] SurveyTopic { get; set; }
+
+        void IValidator.IsValid()
+        {
+            Validator.IsNonEmptyString(this.SurveyTopic);
+        }
     }
 
     // Project's exclusions
     [DataContract]
-    public class Exclusions
+    public class Exclusions : IValidator
     {
         [DataMember(Name = "type")]
         public string Type { get; set; }
         [DataMember(Name = "list")]
         public string[] List { get; set; }
+
+        void IValidator.IsValid()
+        {
+            Validator.IsNonEmptyString(this.Type);
+            Validator.IsNonEmptyString(this.List);
+            Validator.IsExclusionTypeOrNull(this.Type);
+        }
     }
 
     [DataContract]
@@ -74,26 +86,40 @@ namespace ResearchNow.SamplifyAPIClient
 
     // ProjectCriteria has the fields to create or update a project.
     [DataContract]
-    public class ProjectCriteria
+    public class ProjectCriteria : IValidator
     {
         [DataMember(Name = "extProjectId")]
         public string ExtProjectID { get; set; }
-        [DataMember(Name = "title")]
+        [DataMember(Name = "title", EmitDefaultValue = false)]
         public string Title { get; set; }
-        [DataMember(Name = "notificationEmails")]
+        [DataMember(Name = "notificationEmails", EmitDefaultValue = false)]
         public string[] NotificationEmails { get; set; }
-        [DataMember(Name = "devices")]
+        [DataMember(Name = "devices", EmitDefaultValue = false)]
         public string[] Devices { get; set; }
-        [DataMember(Name = "category")]
+        [DataMember(Name = "category", EmitDefaultValue = false)]
         public Category Category { get; set; }
-        [DataMember(Name = "lineItems")]
+        [DataMember(Name = "lineItems", EmitDefaultValue = false)]
         public LineItemCriteria[] LineItems { get; set; }
-        [DataMember(Name = "exclusions")]
+        [DataMember(Name = "exclusions", EmitDefaultValue = false)]
         public Exclusions Exclusions { get; set; }
+
+        void IValidator.IsValid()
+        {
+            Validator.IsNonEmptyString(this.ExtProjectID, this.Title);
+            Validator.IsNonEmptyString(this.NotificationEmails);
+            Validator.IsEmail(this.NotificationEmails);
+            Validator.IsNonEmptyString(this.Devices);
+            Validator.IsDeviceType(this.Devices);
+            Validator.IsNotNull(this.Category);
+            Validator.Validate(this.Category);
+            Validator.IsNotNull(this.LineItems);
+            Validator.ValidateAll(this.LineItems);
+            Validator.Validate(this.Exclusions);
+        }
     }
 
     [DataContract]
-    public class BuyProjectCriteria
+    public class BuyProjectCriteria : IValidator
     {
         [DataMember(Name = "extLineItemId")]
         public string ExtLineItemID { get; set; }
@@ -101,6 +127,15 @@ namespace ResearchNow.SamplifyAPIClient
         public string SurveyURL { get; set; }
         [DataMember(Name = "surveyTestURL")]
         public string SurveyTestURL { get; set; }
+
+        void IValidator.IsValid()
+        {
+            Validator.IsNonEmptyString(this.ExtLineItemID);
+            Validator.IsNonEmptyString(this.SurveyURL);
+            Validator.IsUrlOrNull(this.SurveyURL);
+            Validator.IsNonEmptyString(this.SurveyTestURL);
+            Validator.IsUrlOrNull(this.SurveyTestURL);
+        }
     }
 
     [DataContract]

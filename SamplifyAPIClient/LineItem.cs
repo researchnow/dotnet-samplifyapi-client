@@ -19,12 +19,17 @@ namespace ResearchNow.SamplifyAPIClient
     }
 
     [DataContract]
-    public class QuotaPlan
+    public class QuotaPlan : IValidator
     {
         [DataMember(Name = "filters")]
         public QuotaFilters[] Filters { get; set; }
         [DataMember(Name = "quotaGroups")]
         public QuotaGroup[] QuotaGroups { get; set; }
+
+        void IValidator.IsValid()
+        {
+            Validator.IsNotNull(this.Filters, this.QuotaGroups);
+        }
     }
 
     [DataContract]
@@ -119,30 +124,45 @@ namespace ResearchNow.SamplifyAPIClient
 
     // LineItemCriteria has the fields to create or update a Line Item.
     [DataContract]
-    public class LineItemCriteria
+    public class LineItemCriteria : IValidator
     {
         [DataMember(Name = "extLineItemId")]
         public string ExtLineItemID { get; set; }
-        [DataMember(Name = "title")]
+        [DataMember(Name = "title", EmitDefaultValue = false)]
         public string Title { get; set; }
-        [DataMember(Name = "countryISOCode")]
+        [DataMember(Name = "countryISOCode", EmitDefaultValue = false)]
         public string CountryISOCode { get; set; }
-        [DataMember(Name = "languageISOCode")]
+        [DataMember(Name = "languageISOCode", EmitDefaultValue = false)]
         public string LanguageISOCode { get; set; }
-        [DataMember(Name = "surveyURL")]
+        [DataMember(Name = "surveyURL", EmitDefaultValue = false)]
         public string SurveyURL { get; set; }
-        [DataMember(Name = "surveyTestURL")]
+        [DataMember(Name = "surveyTestURL", EmitDefaultValue = false)]
         public string SurveyTestURL { get; set; }
-        [DataMember(Name = "indicativeIncidence")]
+        [DataMember(Name = "indicativeIncidence", EmitDefaultValue = false)]
         public decimal IndicativeIncidence { get; set; }
-        [DataMember(Name = "daysInField")]
+        [DataMember(Name = "daysInField", EmitDefaultValue = false)]
         public int DaysInField { get; set; }
-        [DataMember(Name = "lengthOfInterview")]
+        [DataMember(Name = "lengthOfInterview", EmitDefaultValue = false)]
         public int LengthOfInterview { get; set; }
-        [DataMember(Name = "requiredCompletes")]
+        [DataMember(Name = "requiredCompletes", EmitDefaultValue = false)]
         public int RequiredCompletes { get; set; }
-        [DataMember(Name = "quotaPlan")]
+        [DataMember(Name = "quotaPlan", EmitDefaultValue = false)]
         public QuotaPlan QuotaPlan { get; set; }
+
+        void IValidator.IsValid()
+        {
+            Validator.IsNonEmptyString(this.ExtLineItemID, this.Title, this.CountryISOCode, this.LanguageISOCode);
+            Validator.IsCountryCodeOrNull(this.CountryISOCode);
+            Validator.IsLanguageCodeOrNull(this.LanguageISOCode);
+            Validator.IsUrlOrNull(this.SurveyURL);
+            Validator.IsUrlOrNull(this.SurveyTestURL);
+            Validator.IsNonZero<decimal>(this.IndicativeIncidence);
+            Validator.IsNonZero<int>(this.DaysInField);
+            Validator.IsNonZero<int>(this.LengthOfInterview);
+            Validator.IsNonZero<int>(this.RequiredCompletes);
+            Validator.IsNotNull(this.QuotaPlan);
+            Validator.Validate(this.QuotaPlan);
+        }
     }
 
     [DataContract]

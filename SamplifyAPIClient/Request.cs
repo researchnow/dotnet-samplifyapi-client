@@ -32,29 +32,22 @@ namespace ResearchNow.SamplifyAPIClient
                 data = Util.Serialize(body);
                 msg.Content = new StringContent(data, System.Text.Encoding.UTF8, "application/json");
             }
-            try
+            var res = await client.SendAsync(msg).ConfigureAwait(false);
+            string json = await res.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var reqID = this.GetHeaderValue(res.Headers, "x-request-id");
+            if (!res.IsSuccessStatusCode)
             {
-                var res = await client.SendAsync(msg).ConfigureAwait(false);
-                string json = await res.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var reqID = this.GetHeaderValue(res.Headers, "x-request-id");
-                if (!res.IsSuccessStatusCode)
-                {
-                    string errPath = string.Format("{0}{1}", host, url);
-                    ErrorResponse err = new ErrorResponse();
-                    err.Timestamp = DateTime.Now;
-                    err.RequestID = reqID;
-                    err.HTTPCode = (int)res.StatusCode;
-                    err.HTTPPhrase = res.ReasonPhrase;
-                    err.Path = errPath;
+                string errPath = string.Format("{0}{1}", host, url);
+                ErrorResponse err = new ErrorResponse();
+                err.Timestamp = DateTime.Now;
+                err.RequestID = reqID;
+                err.HTTPCode = (int)res.StatusCode;
+                err.HTTPPhrase = res.ReasonPhrase;
+                err.Path = errPath;
 
-                    return new APIResponse(reqID, json, err);
-                }
-                return new APIResponse(reqID, json, null);
+                return new APIResponse(reqID, json, err);
             }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            return new APIResponse(reqID, json, null);
         }
 
         private string GetHeaderValue(HttpResponseHeaders headers, string field)

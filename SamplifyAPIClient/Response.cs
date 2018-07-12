@@ -184,6 +184,7 @@ namespace ResearchNow.SamplifyAPIClient
 
         [DataMember(Name = "errors")]
         public ErrorInfo[] Errors { get; set; }
+        [IgnoreDataMember]
         public ErrorResponse HTTPErrorResponse { get; set; }
 
         // Reads "message" from API's custom success/error response and interprets the status as defined by StatusTypeConstants

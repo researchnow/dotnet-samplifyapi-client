@@ -31,17 +31,10 @@ namespace ResearchNow.SamplifyAPIClient
 
         internal static object Deserialize(string json, Type t)
         {
-            try
+            using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(json)))
             {
-                using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(json)))
-                {
-                    var serializer = new DataContractJsonSerializer(t);
-                    return serializer.ReadObject(ms);
-                }
-            }
-            catch (Exception e)
-            {
-                throw e;
+                var serializer = new DataContractJsonSerializer(t);
+                return serializer.ReadObject(ms);
             }
         }
 
