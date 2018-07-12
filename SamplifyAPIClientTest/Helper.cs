@@ -5,9 +5,9 @@ namespace SamplifyAPIClientTest
 {
     public static class Helper
     {
-        public static CreateUpdateProjectCriteria GetTestProject()
+        public static ProjectCriteria GetTestProject()
         {
-            return new CreateUpdateProjectCriteria
+            return new ProjectCriteria
             {
                 ExtProjectID = "project001",
                 Title = "Test Survey",
@@ -28,53 +28,53 @@ namespace SamplifyAPIClientTest
 
         public static LineItemCriteria GetTestLineItem()
         {
-            var quotaGroup = new QuotaGroup
+            var filters = new QuotaFilters[]
             {
-                Name = "Test distribution",
-                Quotas =
-                    new Quota[]
-                    {
-                        new Quota()
-                        {
-                            AttributeID = "11",
-                            Options = new QuotaOption[]
-                            {
-                                new QuotaOption()
-                                {
-                                    Option = new string[] { "1" },
-                                    Perc = 30.0M
-                                },
-                                new QuotaOption()
-                                {
-                                    Option = new string[] { "2" },
-                                    Perc = 70.0M
-                                }
-                            }
-                        }
-                    }
+                new QuotaFilters
+                {
+                    AttributeID = "4091",
+                    Options = new string[] {"3", "4"}
+                }
             };
 
-            var quotaPlan = new QuotaPlan
+            var quotaGroups = new QuotaGroup[]
             {
-                Filters = new QuotaFilters[] {
-                    new QuotaFilters { AttributeID = "4091", Options = new string[] { "3", "4" } }
-                },
-                QuotaGroups = new QuotaGroup[] { quotaGroup }
+                new QuotaGroup
+                {
+                    Name = "Gender distribution",
+                    QuotaCells = new QuotaCell[]
+                    {
+                        new QuotaCell
+                        {
+                            QuotaNodes = new QuotaNode[] {new QuotaNode{AttributeID = "11", OptionIDs = new string[]{"1"}}},
+                            Perc=30M
+                        },
+                        new QuotaCell
+                        {
+                            QuotaNodes = new QuotaNode[] {new QuotaNode{AttributeID = "11", OptionIDs = new string[]{"2"}}},
+                            Perc=70M
+                        }
+                    }
+                }
             };
 
             return new LineItemCriteria
             {
                 ExtLineItemID = "lineItem001",
-                Title = "Test Line item",
+                Title = "US College",
                 CountryISOCode = "US",
                 LanguageISOCode = "en",
-                SurveyURL = "http://www.mysurvey.com/live/survey",
-                SurveyTestURL = "http://www.mysurvey.com/test/survey",
+                SurveyURL = "www.mysurvey.com/live/survey?pid=2424131312&k2=59931&psid=VgrJ2-9iUQZK3noVDtXobw",
+                SurveyTestURL = "www.mysurvey.com/test/survey?pid=2424131312&k2=59931&psid=VgrJ2-9iUQZK3noVDtXobw",
                 IndicativeIncidence = 20.0M,
                 DaysInField = 20,
                 LengthOfInterview = 10,
                 RequiredCompletes = 200,
-                QuotaPlan = quotaPlan
+                QuotaPlan = new QuotaPlan
+                {
+                    Filters = filters,
+                    QuotaGroups = quotaGroups
+                }
             };
         }
 

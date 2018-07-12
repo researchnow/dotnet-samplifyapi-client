@@ -53,7 +53,7 @@ namespace SamplifyAPIClientTest
             });
 
             testClient.CreateProject(Helper.GetTestProject()).Wait();
-            testClient.UpdateProject(new CreateUpdateProjectCriteria { ExtProjectID = "project001" }).Wait();
+            testClient.UpdateProject(new ProjectCriteria { ExtProjectID = "project001" }).Wait();
             testClient.BuyProject("buy-test", Helper.GetTestBuyProjectCriteria()).Wait();
             testClient.CloseProject("close-test").Wait();
             testClient.GetAllProjects(null).Wait();
