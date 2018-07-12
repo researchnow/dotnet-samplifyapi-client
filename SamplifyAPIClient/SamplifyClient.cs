@@ -23,11 +23,11 @@ namespace ResearchNow.SamplifyAPIClient
         public SamplifyClient(string clientID, string username, string password, SamplifyEnv env)
         {
             this.APIBaseURL = HostConstants.UATAPIBaseURL;
-            this.AuthURL = HostConstants.UATAuthURL;
+            this.AuthURL = HostConstants.UATAuthBaseURL;
             if (this.IsProdEnvironment(env))
             {
                 this.APIBaseURL = HostConstants.ProdAPIBaseURL;
-                this.AuthURL = HostConstants.ProdAuthURL;
+                this.AuthURL = HostConstants.ProdAuthBaseURL;
             }
             this.Credentials = new TokenRequest(clientID, username, password);
             this.Request = new Request();
@@ -44,14 +44,14 @@ namespace ResearchNow.SamplifyAPIClient
             this.Auth = new TokenResponse();
         }
 
-        public async Task<ProjectResponse> CreateProject(CreateUpdateProjectCriteria project)
+        public async Task<ProjectResponse> CreateProject(ProjectCriteria project)
         {
             Validator.IsNotNull(project);
             Validator.Validate(project);
             return await this.RequestAndParseResponse<ProjectResponse>(HttpMethod.Post, "/projects", project).ConfigureAwait(false);
         }
 
-        public async Task<ProjectResponse> UpdateProject(CreateUpdateProjectCriteria project)
+        public async Task<ProjectResponse> UpdateProject(ProjectCriteria project)
         {
             Validator.IsNotNull(project);
             Validator.IsNonEmptyString(project.ExtProjectID);
@@ -204,10 +204,47 @@ namespace ResearchNow.SamplifyAPIClient
             return await this.RequestAndParseResponse<GetSurveyTopicsResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
 
+        public async Task<bool> RefreshToken()
+        {
+            if (this.Auth.AccessTokenExpired)
+            {
+                this.Auth = await this.GetAuth().ConfigureAwait(false);
+                return !this.Auth.AccessTokenExpired;
+            }
+            var req = new LogoutRefreshRequest(this.Credentials.ClientID, "", this.Auth.RefreshToken);
+            try
+            {
+                var t = DateTime.Now;
+                var ar = await Request.Send(this.AuthURL, HttpMethod.Post, "/token/refresh", "", req).ConfigureAwait(false);
+                this.Auth = (TokenResponse)Util.Deserialize(ar.Body, typeof(TokenResponse));
+                this.Auth.Acquired = t;
+                return !ar.HasError;
+            }
+            catch (Exception e)
+            {
+                this.Auth = new TokenResponse();
+                throw e;
+            }
+        }
+
+        public async Task<bool> Logout()
+        {
+            if (!this.Auth.AccessTokenExpired)
+            {
+                var req = new LogoutRefreshRequest(this.Credentials.ClientID, this.Auth.AccessToken, this.Auth.RefreshToken);
+                var r = await Request.Send(this.AuthURL, HttpMethod.Post, "/logout", "", req).ConfigureAwait(false);
+                return !r.HasError;
+            }
+            return true;
+        }
+
         public async Task<TokenResponse> GetAuth()
         {
-            var r = await Request.Send(this.AuthURL, HttpMethod.Post, "", "", Credentials);
-            return (TokenResponse)Util.Deserialize(r.Body, typeof(TokenResponse));
+            var t = DateTime.Now;
+            var r = await Request.Send(this.AuthURL, HttpMethod.Post, "/token/password", "", Credentials);
+            var res = (TokenResponse)Util.Deserialize(r.Body, typeof(TokenResponse));
+            res.Acquired = t;
+            return res;
         }
 
         private async Task<T> RequestAndParseResponse<T>(HttpMethod method, string url, object body) where T : Response, new()
@@ -268,7 +305,7 @@ namespace ResearchNow.SamplifyAPIClient
             var t = DateTime.Now;
             try
             {
-                var ar = await Request.Send(this.AuthURL, HttpMethod.Post, "", "", Credentials).ConfigureAwait(false);
+                var ar = await Request.Send(this.AuthURL, HttpMethod.Post, "/token/password", "", Credentials).ConfigureAwait(false);
                 if (ar.HasError)
                 {
                     throw new SamplifyAuthenticationException();
@@ -307,9 +344,9 @@ namespace ResearchNow.SamplifyAPIClient
 
         internal static class HostConstants
         {
-            internal const string ProdAuthURL = "https://api.researchnow.com/auth/v1/token/password";
+            internal const string ProdAuthBaseURL = "https://api.researchnow.com/auth/v1";
             internal const string ProdAPIBaseURL = "https://api.researchnow.com/sample/v1";
-            internal const string UATAuthURL = "https://api.uat.pe.researchnow.com/auth/v1/token/password";
+            internal const string UATAuthBaseURL = "https://api.uat.pe.researchnow.com/auth/v1";
             internal const string UATAPIBaseURL = "https://api.uat.pe.researchnow.com/sample/v1";
             internal const string UnitTextAPIBaseURL = "http://172.0.0.1";
             internal const string UnitTextAuthURL = "http://172.0.0.1/auth/v1/token/password";

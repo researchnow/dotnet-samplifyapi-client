@@ -46,26 +46,26 @@ namespace ResearchNow.SamplifyAPIClient
     {
         [DataMember(Name = "name")]
         public string Name { get; set; }
-        [DataMember(Name = "quotas")]
-        public Quota[] Quotas { get; set; }
+        [DataMember(Name = "quotaCells")]
+        public QuotaCell[] QuotaCells { get; set; }
     }
 
     [DataContract]
-    public class Quota
+    public class QuotaCell
+    {
+        [DataMember(Name = "quotaNodes")]
+        public QuotaNode[] QuotaNodes { get; set; }
+        [DataMember(Name = "perc")]
+        public decimal Perc { get; set; }
+    }
+
+    [DataContract]
+    public class QuotaNode
     {
         [DataMember(Name = "attributeId")]
         public string AttributeID { get; set; }
         [DataMember(Name = "options")]
-        public QuotaOption[] Options { get; set; }
-    }
-
-    [DataContract]
-    public class QuotaOption
-    {
-        [DataMember(Name = "option")]
-        public string[] Option { get; set; }
-        [DataMember(Name = "perc")]
-        public decimal Perc { get; set; }
+        public string[] OptionIDs { get; set; }
     }
 
     [DataContract]

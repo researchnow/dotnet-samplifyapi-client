@@ -52,16 +52,34 @@ namespace ResearchNow.SamplifyAPIClient
         }
     }
 
-    // Filtering/Sorting for GET endpoints that return an array object
+    // Filtering/Sorting and pagination params for GET endpoints that return an array object
     public class QueryOptions
     {
+        private const uint _maxLimit = 50;
+
         public List<Filter> FilterBy { get; set; }
         public List<Sort> SortBy { get; set; }
+        public uint Offset { get; set; }
+        public uint Limit { get; set; }
 
         public QueryOptions()
         {
             this.FilterBy = new List<Filter>();
             this.SortBy = new List<Sort>();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:ResearchNow.SamplifyAPIClient.QueryOptions"/> class with
+        /// Offset and Limit values. Maximum `Limit` value is 50.
+        /// </summary>
+        /// <param name="offset">Offset.</param>
+        /// <param name="limit">Max `Limit` value is 50</param>
+        public QueryOptions(uint offset, uint limit)
+        {
+            this.FilterBy = new List<Filter>();
+            this.SortBy = new List<Sort>();
+            this.Offset = offset;
+            this.Limit = limit;
         }
 
         public void AddFilter(string field, object value)
@@ -95,6 +113,17 @@ namespace ResearchNow.SamplifyAPIClient
                     query = string.Format("{0}{1}{2}:{3}", query, sep, s.Field, s.DirectionToken);
                     sep = ",";
                 }
+            }
+            if (sep != "") { sep = "&amp;"; }
+            if (this.Offset > 0)
+            {
+                query = string.Format("{0}{1}offset={2}", query, sep, this.Offset);
+                sep = "&amp;";
+            }
+            if (this.Limit > 0)
+            {
+                if (this.Limit > _maxLimit) { this.Limit = _maxLimit; }
+                query = string.Format("{0}{1}limit={2}", query, sep, this.Limit);
             }
             return query;
         }

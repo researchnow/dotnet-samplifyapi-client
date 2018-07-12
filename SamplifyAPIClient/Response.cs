@@ -6,7 +6,6 @@ namespace ResearchNow.SamplifyAPIClient
     // Custom StatusType values in API responses.
     public static class StatusTypeConstants
     {
-
         public const string StatusTypeSuccess = "success";
         public const string StatusTypeFail = "fail";
         public const string StatusTypeUnknown = "unknown";
