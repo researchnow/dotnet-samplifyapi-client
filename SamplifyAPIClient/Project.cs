@@ -156,7 +156,7 @@ namespace ResearchNow.SamplifyAPIClient
         [DataMember(Name = "starts")]
         public int Starts { get; set; }
         [DataMember(Name = "conversion")]
-        public int Conversion { get; set; }
+        public decimal Conversion { get; set; }
         [DataMember(Name = "remainingCompletes")]
         public int RemainingCompletes { get; set; }
         [DataMember(Name = "actualMedianLOI")]
