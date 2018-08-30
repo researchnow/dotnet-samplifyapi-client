@@ -18,6 +18,14 @@ namespace ResearchNow.SamplifyAPIClient
         public const string FeasibilityStatusProcessing = "PROCESSING";
     }
 
+    // DeliveryType values
+    public static class DeliveryTypeConstants
+    {
+        public const string Slow = "SLOW";
+        public const string Balanced = "BALANCED";
+        public const string Fast = "FAST";
+    }
+
     [DataContract]
     public class QuotaPlan : IValidator
     {
@@ -114,6 +122,8 @@ namespace ResearchNow.SamplifyAPIClient
         public int DaysInField { get; set; }
         [DataMember(Name = "lengthOfInterview")]
         public int LengthOfInterview { get; set; }
+        [DataMember(Name = "deliveryType")]
+        public string DeliveryType { get; set; }
         [DataMember(Name = "requiredCompletes")]
         public int RequiredCompletes { get; set; }
         [DataMember(Name = "quotaPlan")]
@@ -144,6 +154,8 @@ namespace ResearchNow.SamplifyAPIClient
         public int DaysInField { get; set; }
         [DataMember(Name = "lengthOfInterview", EmitDefaultValue = false)]
         public int LengthOfInterview { get; set; }
+        [DataMember(Name = "deliveryType", EmitDefaultValue = false)]
+        public string DeliveryType { get; set; }
         [DataMember(Name = "requiredCompletes", EmitDefaultValue = false)]
         public int RequiredCompletes { get; set; }
         [DataMember(Name = "quotaPlan", EmitDefaultValue = false)]
@@ -159,6 +171,7 @@ namespace ResearchNow.SamplifyAPIClient
             Validator.IsNonZero<decimal>(this.IndicativeIncidence);
             Validator.IsNonZero<int>(this.DaysInField);
             Validator.IsNonZero<int>(this.LengthOfInterview);
+            Validator.IsDeliveryTypeOrNull(this.DeliveryType);
             Validator.IsNonZero<int>(this.RequiredCompletes);
             Validator.IsNotNull(this.QuotaPlan);
             Validator.Validate(this.QuotaPlan);
