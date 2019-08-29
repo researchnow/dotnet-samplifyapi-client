@@ -202,6 +202,16 @@ namespace ResearchNow.SamplifyAPIClient
                 throw new ValidationException(errInvalidFieldValue);
             }
         }
+
+        internal static void IsOperatorType(string operatorType)
+        {
+            if (operatorType != null &&
+                operatorType != OperatorTypeConstants.Include &&
+                operatorType != OperatorTypeConstants.Exclude)
+            {
+                throw new ValidationException(errInvalidFieldValue);
+            }
+        }
     }
 
     internal interface IValidator

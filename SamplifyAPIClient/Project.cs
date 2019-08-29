@@ -67,6 +67,19 @@ namespace ResearchNow.SamplifyAPIClient
         public string Title { get; set; }
         [DataMember(Name = "state")]
         public string State { get; set; }
+        [DataMember(Name = "author")]
+        public Author Author { get; set; }
+    }
+
+    [DataContract]
+    public class Author
+    {
+        [DataMember(Name = "name")]
+        public string ExtProjectID { get; set; }
+        [DataMember(Name = "type")]
+        public string Type { get; set; }
+        [DataMember(Name = "username")]
+        public string Username { get; set; }
     }
 
     [DataContract]

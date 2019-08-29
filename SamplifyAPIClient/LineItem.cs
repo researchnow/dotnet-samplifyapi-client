@@ -26,6 +26,13 @@ namespace ResearchNow.SamplifyAPIClient
         public const string Fast = "FAST";
     }
 
+    // OperatorType values
+    public static class OperatorTypeConstants
+    {
+        public const string Include = "include";
+        public const string Exclude = "exclude";
+    }
+
     [DataContract]
     public class QuotaPlan : IValidator
     {
@@ -41,12 +48,19 @@ namespace ResearchNow.SamplifyAPIClient
     }
 
     [DataContract]
-    public class QuotaFilters
+    public class QuotaFilters : IValidator
     {
         [DataMember(Name = "attributeId")]
         public string AttributeID { get; set; }
         [DataMember(Name = "options")]
         public string[] Options { get; set; }
+        [DataMember(Name = "operator")]
+        public string Operator { get; set; }
+
+        void IValidator.IsValid()
+        {
+            Validator.IsOperatorType(this.Operator);
+        }
     }
 
     [DataContract]
@@ -56,6 +70,8 @@ namespace ResearchNow.SamplifyAPIClient
         public string Name { get; set; }
         [DataMember(Name = "quotaCells")]
         public QuotaCell[] QuotaCells { get; set; }
+        [DataMember(Name = "quotaGroupId")]
+        public string QuotaGroupID { get; set; }
     }
 
     [DataContract]
@@ -63,8 +79,10 @@ namespace ResearchNow.SamplifyAPIClient
     {
         [DataMember(Name = "quotaNodes")]
         public QuotaNode[] QuotaNodes { get; set; }
-        [DataMember(Name = "perc")]
-        public decimal Perc { get; set; }
+        [DataMember(Name = "count")]
+        public int Count { get; set; }
+        [DataMember(Name = "quotaCellId")]
+        public string QuotaCellID { get; set; }
     }
 
     [DataContract]
@@ -85,6 +103,32 @@ namespace ResearchNow.SamplifyAPIClient
         public string Screenout { get; set; }
         [DataMember(Name = "overquota")]
         public string OverQuota { get; set; }
+        [DataMember(Name = "securityKey1")]
+        public string SecurityKey1 { get; set; }
+        [DataMember(Name = "securityLevel")]
+        public string SecurityLevel { get; set; }
+        [DataMember(Name = "securityKey2")]
+        public string SecurityKey2 { get; set; }
+    }
+
+    [DataContract]
+    public class Source
+    {
+        [DataMember(Name = "id")]
+        public int Id { get; set; }
+    }
+
+    [DataContract]
+    public class Target
+    {
+        [DataMember(Name = "count")]
+        public int Count { get; set; }
+        [DataMember(Name = "dailyLimit")]
+        public int DailyLimit { get; set; }
+        [DataMember(Name = "softLaunch")]
+        public int SoftLaunch { get; set; }
+        [DataMember(Name = "type")]
+        public string Type { get; set; }
     }
 
     [DataContract]
@@ -94,8 +138,6 @@ namespace ResearchNow.SamplifyAPIClient
         public string ExtLineItemID { get; set; }
         [DataMember(Name = "state")]
         public string State { get; set; }
-        [DataMember(Name = "stateReason")]
-        public string StateReason { get; set; }
         [DataMember(Name = "launchedAt")]
         public string RawDTStringLaunchedAt { get; set; }
 
@@ -130,6 +172,10 @@ namespace ResearchNow.SamplifyAPIClient
         public QuotaPlan QuotaPlan { get; set; }
         [DataMember(Name = "endLinks")]
         public EndLinks EndLinks { get; set; }
+        [DataMember(Name = "sources")]
+        public Source[] Source { get; set; }
+        [DataMember(Name = "targets")]
+        public Target[] Target { get; set; }
     }
 
     // LineItemCriteria has the fields to create or update a Line Item.

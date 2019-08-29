@@ -19,6 +19,8 @@ namespace ResearchNow.SamplifyAPIClient
 
         [DataMember(Name = "status")]
         public ResponseStatus ResponseStatus { get; set; }
+        [DataMember(Name = "meta")]
+        public Meta Meta { get; set; }
         [IgnoreDataMember]
         public bool HasError
         {
@@ -67,8 +69,6 @@ namespace ResearchNow.SamplifyAPIClient
     {
         [DataMember(Name = "data")]
         public ProjectHeader[] Projects { get; set; }
-        [DataMember(Name = "meta")]
-        public Meta Meta { get; set; }
     }
 
     [DataContract]
@@ -76,8 +76,6 @@ namespace ResearchNow.SamplifyAPIClient
     {
         [DataMember(Name = "data")]
         public ProjectReport Report { get; set; }
-        [DataMember(Name = "meta")]
-        public Meta Meta { get; set; }
     }
 
     public class CloseProjectResponse : Response
@@ -112,8 +110,6 @@ namespace ResearchNow.SamplifyAPIClient
     {
         [DataMember(Name = "data")]
         public ListItem[] List { get; set; }
-        [DataMember(Name = "meta")]
-        public Meta Meta { get; set; }
 
         [DataContract]
         public class ListItem : LineItemHeader
@@ -148,8 +144,6 @@ namespace ResearchNow.SamplifyAPIClient
     {
         [DataMember(Name = "data")]
         public Country[] List { get; set; }
-        [DataMember(Name = "meta")]
-        public Meta Meta { get; set; }
     }
 
     [DataContract]
@@ -164,8 +158,6 @@ namespace ResearchNow.SamplifyAPIClient
     {
         [DataMember(Name = "data")]
         public SurveyTopic[] List { get; set; }
-        [DataMember(Name = "meta")]
-        public Meta Meta { get; set; }
     }
 
     // ResponseStatus is the custom status part in API response.
@@ -232,6 +224,11 @@ namespace ResearchNow.SamplifyAPIClient
         // Links for page navigation
         [DataMember(Name = "links")]
         public LinkItems Links { get; set; }
+        [DataMember(Name = "pageSize")]
+        public int PageSize { get; set; }
+        [DataMember(Name = "total")]
+        public int Total { get; set; }
+
 
         [DataContract]
         public class LinkItems
