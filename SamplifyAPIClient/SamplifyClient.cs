@@ -2,7 +2,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace ResearchNow.SamplifyAPIClient
+namespace Dynata.SamplifyAPIClient
 {
     public enum SamplifyEnv
     {
@@ -156,15 +156,10 @@ namespace ResearchNow.SamplifyAPIClient
             return await this.RequestAndParseResponse<LineItemResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
 
-        public async Task<GetFeasibilityResponse> GetFeasibility(string extProjectID, QueryOptions options)
+        public async Task<GetFeasibilityResponse> GetFeasibility(string extProjectID)
         {
             Validator.IsNonEmptyString(extProjectID);
-            string query = "";
-            if (options != null)
-            {
-                query = options.ToString();
-            }
-            string path = string.Format("/projects/{0}/feasibility{1}", extProjectID, query);
+            string path = string.Format("/projects/{0}/feasibility", extProjectID);
             return await this.RequestAndParseResponse<GetFeasibilityResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
 
@@ -203,6 +198,23 @@ namespace ResearchNow.SamplifyAPIClient
             }
             string path = string.Format("/categories/surveyTopics{0}", query);
             return await this.RequestAndParseResponse<GetSurveyTopicsResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
+        }
+
+        public async Task<GetAllEventsResponse> GetAllEvents(QueryOptions options)
+        {
+            string query = "";
+            if (options != null)
+            {
+                query = options.ToString();
+            }
+            string path = string.Format("/events{0}", query);
+            return await this.RequestAndParseResponse<GetAllEventsResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
+        }
+
+        public async Task<EventResponse> GetEventBy(Int64 eventID)
+        {
+            string path = string.Format("/events/{0}", eventID);
+            return await this.RequestAndParseResponse<EventResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
 
         public async Task<bool> RefreshToken()
@@ -345,10 +357,10 @@ namespace ResearchNow.SamplifyAPIClient
 
         internal static class HostConstants
         {
-            internal const string ProdAuthBaseURL = "https://api.researchnow.com/auth/v1";
-            internal const string ProdAPIBaseURL = "https://api.researchnow.com/sample/v1";
-            internal const string UATAuthBaseURL = "https://api.uat.pe.researchnow.com/auth/v1";
-            internal const string UATAPIBaseURL = "https://api.uat.pe.researchnow.com/sample/v1";
+            internal const string ProdAuthBaseURL = "https://api.Dynata.com/auth/v1";
+            internal const string ProdAPIBaseURL = "https://api.Dynata.com/sample/v1";
+            internal const string UATAuthBaseURL = "https://api.uat.pe.Dynata.com/auth/v1";
+            internal const string UATAPIBaseURL = "https://api.uat.pe.Dynata.com/sample/v1";
             internal const string UnitTextAPIBaseURL = "http://172.0.0.1";
             internal const string UnitTextAuthURL = "http://172.0.0.1/auth/v1/token/password";
         }

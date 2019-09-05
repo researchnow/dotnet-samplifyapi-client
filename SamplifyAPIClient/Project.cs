@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace ResearchNow.SamplifyAPIClient
+namespace Dynata.SamplifyAPIClient
 {
     // State values for Projects and Line Items.
     public static class StateConstants

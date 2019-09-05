@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ResearchNow.SamplifyAPIClient
+namespace Dynata.SamplifyAPIClient
 {
     public class ErrorResponse
     {

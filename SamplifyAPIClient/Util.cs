@@ -4,7 +4,7 @@ using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Text;
 
-namespace ResearchNow.SamplifyAPIClient
+namespace Dynata.SamplifyAPIClient
 {
     internal static class Util
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace ResearchNow.SamplifyAPIClient
+namespace Dynata.SamplifyAPIClient
 {
     // Custom StatusType values in API responses.
     public static class StatusTypeConstants
@@ -54,34 +54,48 @@ namespace ResearchNow.SamplifyAPIClient
     public class ProjectResponse : Response
     {
         [DataMember(Name = "data")]
-        public Project Project { get; set; }
+        public Project Data { get; set; }
     }
 
     [DataContract]
     public class BuyProjectResponse : Response
     {
         [DataMember(Name = "data")]
-        public BuyProjectLineItem[] List { get; set; }
+        public BuyProjectLineItem[] Data { get; set; }
     }
 
     [DataContract]
     public class GetAllProjectsResponse : Response
     {
         [DataMember(Name = "data")]
-        public ProjectHeader[] Projects { get; set; }
+        public ProjectHeader[] Data { get; set; }
+    }
+
+    [DataContract]
+    public class GetAllEventsResponse : Response
+    {
+        [DataMember(Name = "data")]
+        public Event[] Data { get; set; }
+    }
+
+    [DataContract]
+    public class EventResponse : Response
+    {
+        [DataMember(Name = "data")]
+        public Event Data { get; set; }
     }
 
     [DataContract]
     public class ProjectReportResponse : Response
     {
         [DataMember(Name = "data")]
-        public ProjectReport Report { get; set; }
+        public ProjectReport Data { get; set; }
     }
 
     public class CloseProjectResponse : Response
     {
         [DataMember(Name = "data")]
-        public Item Project { get; set; }
+        public Item Data { get; set; }
 
         [DataContract]
         public class Item : ProjectHeader
@@ -95,21 +109,21 @@ namespace ResearchNow.SamplifyAPIClient
     public class LineItemResponse : Response
     {
         [DataMember(Name = "data")]
-        public LineItem Item { get; set; }
+        public LineItem Data { get; set; }
     }
 
     [DataContract]
     public class UpdateLineItemStateResponse : Response
     {
         [DataMember(Name = "data")]
-        public LineItemHeader LineItem { get; set; }
+        public LineItemHeader Data { get; set; }
     }
 
     [DataContract]
     public class GetAllLineItemsResponse : Response
     {
         [DataMember(Name = "data")]
-        public ListItem[] List { get; set; }
+        public ListItem[] Data { get; set; }
 
         [DataContract]
         public class ListItem : LineItemHeader
@@ -127,7 +141,7 @@ namespace ResearchNow.SamplifyAPIClient
     public class GetFeasibilityResponse : Response
     {
         [DataMember(Name = "data")]
-        public ListItem[] List { get; set; }
+        public ListItem[] Data { get; set; }
 
         [DataContract]
         public class ListItem
@@ -143,21 +157,21 @@ namespace ResearchNow.SamplifyAPIClient
     public class GetCountriesResponse : Response
     {
         [DataMember(Name = "data")]
-        public Country[] List { get; set; }
+        public Country[] Data { get; set; }
     }
 
     [DataContract]
     public class GetAttributesResponse : Response
     {
         [DataMember(Name = "data")]
-        public Attribute[] List { get; set; }
+        public Attribute[] Data { get; set; }
     }
 
     [DataContract]
     public class GetSurveyTopicsResponse : Response
     {
         [DataMember(Name = "data")]
-        public SurveyTopic[] List { get; set; }
+        public SurveyTopic[] Data { get; set; }
     }
 
     // ResponseStatus is the custom status part in API response.
