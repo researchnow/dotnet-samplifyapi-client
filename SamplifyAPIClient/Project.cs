@@ -61,6 +61,8 @@ namespace Dynata.SamplifyAPIClient
     [DataContract]
     public class ProjectHeader : Model
     {
+        [DataMember(Name = "jobNumber")]
+        public string JobNumber { get; set; }
         [DataMember(Name = "extProjectId")]
         public string ExtProjectID { get; set; }
         [DataMember(Name = "title")]
@@ -154,6 +156,7 @@ namespace Dynata.SamplifyAPIClient
     [DataContract]
     public class ProjectReport
     {
+
         [DataMember(Name = "extProjectId")]
         public string ExtProjectID { get; set; }
         [DataMember(Name = "state")]
@@ -166,8 +169,8 @@ namespace Dynata.SamplifyAPIClient
         public int Screenouts { get; set; }
         [DataMember(Name = "overquotas")]
         public int Overquotas { get; set; }
-        [DataMember(Name = "starts")]
-        public int Starts { get; set; }
+        //[DataMember(Name = "starts")]
+        //public int Starts { get; set; }
         [DataMember(Name = "conversion")]
         public decimal Conversion { get; set; }
         [DataMember(Name = "remainingCompletes")]
@@ -178,6 +181,16 @@ namespace Dynata.SamplifyAPIClient
         public decimal IncurredCost { get; set; }
         [DataMember(Name = "estimatedCost")]
         public decimal EstimatedCost { get; set; }
+        [DataMember(Name = "completesRefused")]
+        public int CompletesRefused { get; set; }
+        [DataMember(Name = "currency")]
+        public string Currency { get; set; }
+        [DataMember(Name = "extProjectId")]
+        public string ExtProjectId { get; set; }
+        [DataMember(Name = "incompletes")]
+        public int Incompletes { get; set; }
+        [DataMember(Name = "title")]
+        public string Title { get; set; }
         [DataMember(Name = "lineItems")]
         public LineItemReport[] LineItems { get; set; }
     }
@@ -190,5 +203,71 @@ namespace Dynata.SamplifyAPIClient
         public string Topic { get; set; }
         [DataMember(Name = "description")]
         public string Description { get; set; }
+    }
+
+    [DataContract]
+    public class ProjectSurveyEndLinks
+    {
+
+        [DataMember(Name = "endLinks")]
+        public SurveyEndLinks EndLinks { get; set; }
+        [DataMember(Name = "entryLink")]
+        public string EntryLink { get; set; }
+        [DataMember(Name = "securityKey1")]
+        public string SecurityKey1 { get; set; }
+        [DataMember(Name = "securityKey2")]
+        public string SecurityKey2 { get; set; }
+        [DataMember(Name = "securityLevel")]
+        public string SecurityLevel { get; set; }
+        [DataMember(Name = "tests")]
+        public SurveyTest[] Tests { get; set; }
+    }
+
+    [DataContract]
+    public class SurveyEndLinks
+    {
+        [DataMember(Name = "complete")]
+        public SurveyTestLink Complete { get; set; }
+        [DataMember(Name = "overquota")]
+        public SurveyTestLink Overquota { get; set; }
+        [DataMember(Name = "screenout")]
+        public SurveyTestLink Screenout { get; set; }
+    }
+
+    [DataContract]
+    public class SurveyTestLink
+    {
+        [DataMember(Name = "link")]
+        public string Link { get; set; }
+        [DataMember(Name = "testedIds")]
+        public SurveyTestID[] TestedIds { get; set; }
+    }
+
+    [DataContract]
+    public class SurveyTestID
+    {
+        [DataMember(Name = "pid")]
+        public int PID { get; set; }
+        [DataMember(Name = "testSuccessful")]
+        public bool TestSuccessful { get; set; }
+        [DataMember(Name = "testedAt")]
+        public string TestedAt { get; set; }
+    }
+
+    [DataContract]
+    public class SurveyTest
+    {
+        [DataMember(Name = "disposition")]
+        public string Disposition { get; set; }
+        [DataMember(Name = "failReason")]
+        public string FailReason { get; set; }
+        [DataMember(Name = "isSuccessful")]
+        public bool IsSuccessful { get; set; }
+        [DataMember(Name = "pid")]
+        public string PID { get; set; }
+        [DataMember(Name = "psid")]
+        public string PSID { get; set; }
+        [DataMember(Name = "testedAt")]
+        public string TestedAt { get; set; }
     }
 }

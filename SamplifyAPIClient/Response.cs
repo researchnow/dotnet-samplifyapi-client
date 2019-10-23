@@ -86,10 +86,38 @@ namespace Dynata.SamplifyAPIClient
     }
 
     [DataContract]
+    public class CreateProjectEventResponse : Response
+    {
+        [DataMember(Name = "data")]
+        public Webhook Data { get; set; }
+    }
+
+    [DataContract]
+    public class RepriceEventResponse : Response
+    {
+        [DataMember(Name = "data")]
+        public Reprice Data { get; set; }
+    }
+
+    [DataContract]
+    public class StateChangeEventResponse : Response
+    {
+        [DataMember(Name = "data")]
+        public Webhook Data { get; set; }
+    }
+
+    [DataContract]
     public class ProjectReportResponse : Response
     {
         [DataMember(Name = "data")]
         public ProjectReport Data { get; set; }
+    }
+
+    [DataContract]
+    public class EndLinksResponse : Response
+    {
+        [DataMember(Name = "data")]
+        public ProjectSurveyEndLinks Data { get; set; }
     }
 
     public class CloseProjectResponse : Response
@@ -150,6 +178,8 @@ namespace Dynata.SamplifyAPIClient
             public string ExtLineItemID { get; set; }
             [DataMember(Name = "feasibility")]
             public Feasibility Feasibility { get; set; }
+            [DataMember(Name = "quote")]
+            public Quote Quote { get; set; }
         }
     }
 
@@ -161,10 +191,24 @@ namespace Dynata.SamplifyAPIClient
     }
 
     [DataContract]
+    public class GetSourcesResponse : Response
+    {
+        [DataMember(Name = "data")]
+        public Source[] Data { get; set; }
+    }
+
+    [DataContract]
     public class GetAttributesResponse : Response
     {
         [DataMember(Name = "data")]
         public Attribute[] Data { get; set; }
+    }
+
+    [DataContract]
+    public class GetUserInfoResponse : Response
+    {
+        [DataMember(Name = "data")]
+        public UserInfo Data { get; set; }
     }
 
     [DataContract]

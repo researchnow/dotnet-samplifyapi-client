@@ -20,5 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Event.txt" />
+    <Compile Remove="Order.cs" />
   </ItemGroup>
 </Project>

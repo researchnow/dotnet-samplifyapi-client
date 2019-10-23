@@ -81,17 +81,26 @@ namespace Dynata.SamplifyAPIClient
         public QuotaNode[] QuotaNodes { get; set; }
         [DataMember(Name = "count")]
         public int Count { get; set; }
+        [DataMember(Name = "perc")]
+        public int Perc { get; set; }
         [DataMember(Name = "quotaCellId")]
         public string QuotaCellID { get; set; }
     }
 
     [DataContract]
-    public class QuotaNode
+    public class QuotaNode : IValidator
     {
         [DataMember(Name = "attributeId")]
         public string AttributeID { get; set; }
         [DataMember(Name = "options")]
         public string[] OptionIDs { get; set; }
+        [DataMember(Name = "operator")]
+        public string Operator { get; set; }
+
+        void IValidator.IsValid()
+        {
+            Validator.IsOperatorType(this.Operator);
+        }
     }
 
     [DataContract]
@@ -138,6 +147,8 @@ namespace Dynata.SamplifyAPIClient
         public string ExtLineItemID { get; set; }
         [DataMember(Name = "state")]
         public string State { get; set; }
+        [DataMember(Name = "stateReason")]
+        public string StateReason { get; set; }
         [DataMember(Name = "launchedAt")]
         public string RawDTStringLaunchedAt { get; set; }
 
@@ -156,8 +167,12 @@ namespace Dynata.SamplifyAPIClient
         public string LanguageISOCode { get; set; }
         [DataMember(Name = "surveyURL")]
         public string SurveyURL { get; set; }
+        [DataMember(Name = "surveyURLParams")]
+        public SurveyURLParams[] SurveyURLParams { get; set; }
         [DataMember(Name = "surveyTestURL")]
         public string SurveyTestURL { get; set; }
+        [DataMember(Name = "surveyTestURLParams")]
+        public SurveyURLParams[] SurveyTestURLParams { get; set; }
         [DataMember(Name = "indicativeIncidence")]
         public decimal IndicativeIncidence { get; set; }
         [DataMember(Name = "daysInField")]
@@ -166,6 +181,8 @@ namespace Dynata.SamplifyAPIClient
         public int LengthOfInterview { get; set; }
         [DataMember(Name = "deliveryType")]
         public string DeliveryType { get; set; }
+        [DataMember(Name = "dynataLineItemReferenceId")]
+        public string DynataLineItemReferenceId { get; set; }
         [DataMember(Name = "requiredCompletes")]
         public int RequiredCompletes { get; set; }
         [DataMember(Name = "quotaPlan")]
@@ -176,6 +193,15 @@ namespace Dynata.SamplifyAPIClient
         public Source[] Source { get; set; }
         [DataMember(Name = "targets")]
         public Target[] Target { get; set; }
+    }
+
+    [DataContract]
+    public class SurveyURLParams
+    {
+        [DataMember(Name = "key")]
+        public string Key { get; set; }
+        [DataMember(Name = "values")]
+        public string[] Values { get; set; }
     }
 
     // LineItemCriteria has the fields to create or update a Line Item.
@@ -248,8 +274,6 @@ namespace Dynata.SamplifyAPIClient
         public int Overquotas { get; set; }
         [DataMember(Name = "screenouts")]
         public int Screenouts { get; set; }
-        [DataMember(Name = "starts")]
-        public int Starts { get; set; }
         [DataMember(Name = "conversion")]
         public decimal Conversion { get; set; }
         [DataMember(Name = "remainingCompletes")]
@@ -258,8 +282,24 @@ namespace Dynata.SamplifyAPIClient
         public int ActualMedianLOI { get; set; }
         [DataMember(Name = "incurredCost")]
         public decimal IncurredCost { get; set; }
-        [DataMember(Name = "estimatedCost")]
-        public decimal EstimatedCost { get; set; }
+        [DataMember(Name = "completesRefused")]
+        public int CompletesRefused { get; set; }
+        [DataMember(Name = "countryISOCode")]
+        public string CountryISOCode { get; set; }
+        [DataMember(Name = "currency")]
+        public string Currency { get; set; }
+        [DataMember(Name = "incompletes")]
+        public int Incompletes { get; set; }
+        [DataMember(Name = "languageISOCode")]
+        public string LanguageISOCode { get; set; }
+        [DataMember(Name = "lastAcceptedIncidenceRate")]
+        public decimal LastAcceptedIncidenceRate { get; set; }
+        [DataMember(Name = "lastAcceptedLOI")]
+        public int LastAcceptedLOI { get; set; }
+        [DataMember(Name = "stateReason")] 
+        public string StateReason { get; set; }
+        [DataMember(Name = "title")]
+        public string Title { get; set; }
     }
 
     [DataContract]
@@ -278,6 +318,34 @@ namespace Dynata.SamplifyAPIClient
 
         [DataMember(Name = "valueCounts")]
         public ValueCount[] ValueCounts { get; set; }
+    }
+
+    [DataContract]
+    public class Quote
+    {
+        [DataMember(Name = "costPerUnit")]
+        public decimal CostPerUnit { get; set; }
+        [DataMember(Name = "currency")]
+        public string Currency { get; set; }
+        [DataMember(Name = "detailedQuote")]
+        public DetailedQuote[] DetailedQuote { get; set; }
+        [DataMember(Name = "estimatedCost")]
+        public decimal EstimatedCost { get; set; }
+    }
+
+    [DataContract]
+    public class DetailedQuote
+    {
+        [DataMember(Name = "costPerUnit")]
+        public decimal CostPerUnit { get; set; }
+        [DataMember(Name = "estimatedCost")]
+        public decimal EstimatedCost { get; set; }
+        [DataMember(Name = "title")]
+        public string Title { get; set; }
+        [DataMember(Name = "type")]
+        public string Type { get; set; }
+        [DataMember(Name = "units")]
+        public int Units { get; set; }
     }
 
     [DataContract]

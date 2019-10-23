@@ -212,6 +212,16 @@ namespace Dynata.SamplifyAPIClient
                 throw new ValidationException(errInvalidFieldValue);
             }
         }
+
+        internal static void IsRepriceReason(string reason)
+        {
+            if (reason == null || (reason != RepriceConstants.RepriceUnknown &&
+                         reason != RepriceConstants.RepriceLOIChange &&
+                         reason != RepriceConstants.RepriceIRChange))
+            {
+                throw new ValidationException(errInvalidFieldValue);
+            }
+        }
     }
 
     internal interface IValidator
