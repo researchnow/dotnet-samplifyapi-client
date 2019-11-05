@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace ResearchNow.SamplifyAPIClient
+namespace Dynata.SamplifyAPIClient
 {
     public class ValidationException : Exception
     {
@@ -198,6 +198,26 @@ namespace ResearchNow.SamplifyAPIClient
                 deliveryType != DeliveryTypeConstants.Slow &&
                 deliveryType != DeliveryTypeConstants.Balanced &&
                 deliveryType != DeliveryTypeConstants.Fast)
+            {
+                throw new ValidationException(errInvalidFieldValue);
+            }
+        }
+
+        internal static void IsOperatorType(string operatorType)
+        {
+            if (operatorType != null &&
+                operatorType != OperatorTypeConstants.Include &&
+                operatorType != OperatorTypeConstants.Exclude)
+            {
+                throw new ValidationException(errInvalidFieldValue);
+            }
+        }
+
+        internal static void IsRepriceReason(string reason)
+        {
+            if (reason == null || (reason != RepriceConstants.RepriceUnknown &&
+                         reason != RepriceConstants.RepriceLOIChange &&
+                         reason != RepriceConstants.RepriceIRChange))
             {
                 throw new ValidationException(errInvalidFieldValue);
             }

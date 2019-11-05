@@ -2,7 +2,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace ResearchNow.SamplifyAPIClient
+namespace Dynata.SamplifyAPIClient
 {
     public enum SamplifyEnv
     {
@@ -44,11 +44,121 @@ namespace ResearchNow.SamplifyAPIClient
             this.Auth = new TokenResponse();
         }
 
+        // Attributes
+        public async Task<GetAttributesResponse> GetAttributes(string countryCode, string languageCode, QueryOptions options)
+        {
+            Validator.IsNonEmptyString(countryCode, languageCode);
+            Validator.IsCountryCodeOrNull(countryCode);
+            Validator.IsLanguageCodeOrNull(languageCode);
+
+            string query = "";
+            if (options != null)
+            {
+                query = options.ToString();
+            }
+            string path = string.Format("/attributes/{0}/{1}{2}", countryCode, languageCode, query);
+            return await this.RequestAndParseResponse<GetAttributesResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
+        }
+
+        // Categories
+        public async Task<GetSurveyTopicsResponse> GetSurveyTopics(QueryOptions options)
+        {
+            string query = "";
+            if (options != null)
+            {
+                query = options.ToString();
+            }
+            string path = string.Format("/categories/surveyTopics{0}", query);
+            return await this.RequestAndParseResponse<GetSurveyTopicsResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
+        }
+
+        // Countries
+        public async Task<GetCountriesResponse> GetCountries(QueryOptions options)
+        {
+            string query = "";
+            if (options != null)
+            {
+                query = options.ToString();
+            }
+            string path = string.Format("/countries{0}", query);
+            return await this.RequestAndParseResponse<GetCountriesResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
+        }
+
+        // Events
+        public async Task<GetAllEventsResponse> GetAllEvents(QueryOptions options)
+        {
+            string query = "";
+            if (options != null)
+            {
+                query = options.ToString();
+            }
+            string path = string.Format("/events{0}", query);
+            return await this.RequestAndParseResponse<GetAllEventsResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
+        }
+
+        public async Task<CreateProjectEventResponse> CreateProjectEvent(CreateProjectEventCriteria createProjectEvent)
+        {
+            Validator.IsNotNull(createProjectEvent);
+            Validator.Validate(createProjectEvent);
+            return await this.RequestAndParseResponse<CreateProjectEventResponse>(HttpMethod.Post, "/events/lineItems/createproject", createProjectEvent).ConfigureAwait(false);
+        }
+
+        public async Task<RepriceEventResponse> RepriceEvent(RepriceEventCriteria repriceEvent)
+        {
+            Validator.IsNotNull(repriceEvent);
+            Validator.Validate(repriceEvent);
+            return await this.RequestAndParseResponse<RepriceEventResponse>(HttpMethod.Post, "/events/lineItems/reprice", repriceEvent).ConfigureAwait(false);
+        }
+
+        public async Task<StateChangeEventResponse> StateChangeEvent(StateChangeEventCriteria stateChangeEvent)
+        {
+            Validator.IsNotNull(stateChangeEvent);
+            Validator.Validate(stateChangeEvent);
+            return await this.RequestAndParseResponse<StateChangeEventResponse>(HttpMethod.Post, "/events/lineItems/stateChange", stateChangeEvent).ConfigureAwait(false);
+        }
+
+        public async Task<EventResponse> GetEventBy(int eventID)
+        {
+            string path = string.Format("/events/{0}", eventID);
+            return await this.RequestAndParseResponse<EventResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
+        }
+
+        public async Task<EventResponse> AcceptEvent(int eventID)
+        {
+            string path = string.Format("/events/{0}/accept", eventID);
+            return await this.RequestAndParseResponse<EventResponse>(HttpMethod.Post, path, null).ConfigureAwait(false);
+        }
+
+        public async Task<EventResponse> RejectEvent(int eventID)
+        {
+            string path = string.Format("/events/{0}/reject", eventID);
+            return await this.RequestAndParseResponse<EventResponse>(HttpMethod.Post, path, null).ConfigureAwait(false);
+        }
+
+        // Projects
+        public async Task<GetAllProjectsResponse> GetAllProjects(QueryOptions options)
+        {
+            string query = "";
+            if (options != null)
+            {
+                query = options.ToString();
+            }
+            string path = string.Format("/projects{0}", query);
+            return await this.RequestAndParseResponse<GetAllProjectsResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
+        }
+
         public async Task<ProjectResponse> CreateProject(ProjectCriteria project)
         {
             Validator.IsNotNull(project);
             Validator.Validate(project);
             return await this.RequestAndParseResponse<ProjectResponse>(HttpMethod.Post, "/projects", project).ConfigureAwait(false);
+        }
+
+        public async Task<ProjectResponse> GetProjectBy(string extProjectID)
+        {
+            Validator.IsNonEmptyString(extProjectID);
+            string path = string.Format("/projects/{0}", extProjectID);
+            return await this.RequestAndParseResponse<ProjectResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
 
         public async Task<ProjectResponse> UpdateProject(ProjectCriteria project)
@@ -79,29 +189,44 @@ namespace ResearchNow.SamplifyAPIClient
             return await this.RequestAndParseResponse<CloseProjectResponse>(HttpMethod.Post, path, null).ConfigureAwait(false);
         }
 
-        public async Task<GetAllProjectsResponse> GetAllProjects(QueryOptions options)
-        {
-            string query = "";
-            if (options != null)
-            {
-                query = options.ToString();
-            }
-            string path = string.Format("/projects{0}", query);
-            return await this.RequestAndParseResponse<GetAllProjectsResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
-        }
+        // TODO - Invoices
 
-        public async Task<ProjectResponse> GetProjectBy(string extProjectID)
-        {
-            Validator.IsNonEmptyString(extProjectID);
-            string path = string.Format("/projects/{0}", extProjectID);
-            return await this.RequestAndParseResponse<ProjectResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
-        }
+        // TODO - Reconcile
 
         public async Task<ProjectReportResponse> GetProjectReport(string extProjectID)
         {
             Validator.IsNonEmptyString(extProjectID);
             string path = string.Format("/projects/{0}/report", extProjectID);
             return await this.RequestAndParseResponse<ProjectReportResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
+        }
+
+        public async Task<EndLinksResponse> GetEndLinksBy(string extProjectID, string surveyID)
+        {
+            Validator.IsNonEmptyString(extProjectID, surveyID);
+            string path = string.Format("/projects/{0}/surveys/{1}", extProjectID, surveyID);
+            return await this.RequestAndParseResponse<EndLinksResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
+        }
+
+        // Feasibility
+        // TODO - Update this
+        public async Task<GetFeasibilityResponse> GetFeasibility(string extProjectID)
+        {
+            Validator.IsNonEmptyString(extProjectID);
+            string path = string.Format("/projects/{0}/feasibility", extProjectID);
+            return await this.RequestAndParseResponse<GetFeasibilityResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
+        }
+
+        // LineItems
+        public async Task<GetAllLineItemsResponse> GetAllLineItems(string extProjectID, QueryOptions options)
+        {
+            Validator.IsNonEmptyString(extProjectID);
+            string query = "";
+            if (options != null)
+            {
+                query = options.ToString();
+            }
+            string path = string.Format("/projects/{0}/lineItems{1}", extProjectID, query);
+            return await this.RequestAndParseResponse<GetAllLineItemsResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
 
         public async Task<LineItemResponse> AddLineItem(string extProjectID, LineItemCriteria lineItem)
@@ -112,6 +237,13 @@ namespace ResearchNow.SamplifyAPIClient
 
             string path = string.Format("/projects/{0}/lineItems", extProjectID);
             return await this.RequestAndParseResponse<LineItemResponse>(HttpMethod.Post, path, lineItem).ConfigureAwait(false);
+        }
+
+        public async Task<LineItemResponse> GetLineItemBy(string extProjectID, string extLineItemID)
+        {
+            Validator.IsNonEmptyString(extProjectID, extLineItemID);
+            string path = string.Format("/projects/{0}/lineItems/{1}", extProjectID, extLineItemID);
+            return await this.RequestAndParseResponse<LineItemResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
 
         public async Task<LineItemResponse> UpdateLineItem(string extProjectID, string extLineItemID, LineItemCriteria lineItem)
@@ -137,74 +269,31 @@ namespace ResearchNow.SamplifyAPIClient
             return await this.RequestAndParseResponse<UpdateLineItemStateResponse>(HttpMethod.Post, path, null).ConfigureAwait(false);
         }
 
-        public async Task<GetAllLineItemsResponse> GetAllLineItems(string extProjectID, QueryOptions options)
-        {
-            Validator.IsNonEmptyString(extProjectID);
-            string query = "";
-            if (options != null)
-            {
-                query = options.ToString();
-            }
-            string path = string.Format("/projects/{0}/lineItems{1}", extProjectID, query);
-            return await this.RequestAndParseResponse<GetAllLineItemsResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
-        }
-
-        public async Task<LineItemResponse> GetLineItemBy(string extProjectID, string extLineItemID)
-        {
-            Validator.IsNonEmptyString(extProjectID, extLineItemID);
-            string path = string.Format("/projects/{0}/lineItems/{1}", extProjectID, extLineItemID);
-            return await this.RequestAndParseResponse<LineItemResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
-        }
-
-        public async Task<GetFeasibilityResponse> GetFeasibility(string extProjectID, QueryOptions options)
-        {
-            Validator.IsNonEmptyString(extProjectID);
-            string query = "";
-            if (options != null)
-            {
-                query = options.ToString();
-            }
-            string path = string.Format("/projects/{0}/feasibility{1}", extProjectID, query);
-            return await this.RequestAndParseResponse<GetFeasibilityResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
-        }
-
-        public async Task<GetCountriesResponse> GetCountries(QueryOptions options)
+        // SampleSources
+        public async Task<GetSourcesResponse> GetSources(QueryOptions options)
         {
             string query = "";
             if (options != null)
             {
                 query = options.ToString();
             }
-            string path = string.Format("/countries{0}", query);
-            return await this.RequestAndParseResponse<GetCountriesResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
+            string path = string.Format("/sources{0}", query);
+            return await this.RequestAndParseResponse<GetSourcesResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
 
-        public async Task<GetAttributesResponse> GetAttributes(string countryCode, string languageCode, QueryOptions options)
-        {
-            Validator.IsNonEmptyString(countryCode, languageCode);
-            Validator.IsCountryCodeOrNull(countryCode);
-            Validator.IsLanguageCodeOrNull(languageCode);
-
-            string query = "";
-            if (options != null)
-            {
-                query = options.ToString();
-            }
-            string path = string.Format("/attributes/{0}/{1}{2}", countryCode, languageCode, query);
-            return await this.RequestAndParseResponse<GetAttributesResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
-        }
-
-        public async Task<GetSurveyTopicsResponse> GetSurveyTopics(QueryOptions options)
+        // Users
+        public async Task<GetUserInfoResponse> GetUserInfo(QueryOptions options)
         {
             string query = "";
             if (options != null)
             {
                 query = options.ToString();
             }
-            string path = string.Format("/categories/surveyTopics{0}", query);
-            return await this.RequestAndParseResponse<GetSurveyTopicsResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
+            string path = string.Format("/users/info{0}", query);
+            return await this.RequestAndParseResponse<GetUserInfoResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
 
+        //Auth
         public async Task<bool> RefreshToken()
         {
             if (this.Auth.AccessTokenExpired)
@@ -345,10 +434,10 @@ namespace ResearchNow.SamplifyAPIClient
 
         internal static class HostConstants
         {
-            internal const string ProdAuthBaseURL = "https://api.researchnow.com/auth/v1";
-            internal const string ProdAPIBaseURL = "https://api.researchnow.com/sample/v1";
-            internal const string UATAuthBaseURL = "https://api.uat.pe.researchnow.com/auth/v1";
-            internal const string UATAPIBaseURL = "https://api.uat.pe.researchnow.com/sample/v1";
+            internal const string ProdAuthBaseURL = "https://api.Dynata.com/auth/v1";
+            internal const string ProdAPIBaseURL = "https://api.Dynata.com/sample/v1";
+            internal const string UATAuthBaseURL = "https://api.uat.pe.Dynata.com/auth/v1";
+            internal const string UATAPIBaseURL = "https://api.uat.pe.Dynata.com/sample/v1";
             internal const string UnitTextAPIBaseURL = "http://172.0.0.1";
             internal const string UnitTextAuthURL = "http://172.0.0.1/auth/v1/token/password";
         }

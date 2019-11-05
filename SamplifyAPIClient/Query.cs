@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web;
 
-namespace ResearchNow.SamplifyAPIClient
+namespace Dynata.SamplifyAPIClient
 {
     public enum SortDirection
     {
@@ -69,7 +69,7 @@ namespace ResearchNow.SamplifyAPIClient
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:ResearchNow.SamplifyAPIClient.QueryOptions"/> class with
+        /// Initializes a new instance of the <see cref="T:Dynata.SamplifyAPIClient.QueryOptions"/> class with
         /// Offset and Limit values. Maximum `Limit` value is 50.
         /// </summary>
         /// <param name="offset">Offset.</param>

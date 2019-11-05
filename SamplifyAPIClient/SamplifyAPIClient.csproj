@@ -3,12 +3,23 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>ResearchNow.SamplifyAPIClient</RootNamespace>
-    <Description>Client library to connect with researchnow/ssi demand api</Description>
+    <Description>SamplifyAPI Client for DotNet</Description>
     <ReleaseVersion>1.0</ReleaseVersion>
     <SynchReleaseVersion>false</SynchReleaseVersion>
+    <PackOnBuild>true</PackOnBuild>
+    <PackageVersion>0.0.1</PackageVersion>
+    <Authors>Dynata</Authors>
+    <Copyright>Copyright (c) 2019 Dynata</Copyright>
+    <Owners>Dynata</Owners>
+    <PackageId>Samplify_API_Client</PackageId>
+    <PackageLicenseUrl>https://github.com/researchnow/dotnet-samplifyapi-client/blob/master/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
 
   <ItemGroup>
     
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Event.txt" />
+    <Compile Remove="Order.cs" />
   </ItemGroup>
 </Project>
