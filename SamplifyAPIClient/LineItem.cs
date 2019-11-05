@@ -368,16 +368,35 @@ namespace Dynata.SamplifyAPIClient
     [DataContract]
     public class Attribute
     {
+        [DataMember(Name = "category")]
+        public AttributeCategory Category { get; set; }
+        [DataMember(Name = "exclusions")]
+        public string[] Exclusions { get; set; }
+        //[DataMember(Name = "extras")]
+        //public string Extras { get; set; }
+        [DataMember(Name = "format")]
+        public string Format { get; set; }
         [DataMember(Name = "id")]
         public string ID { get; set; }
+        [DataMember(Name = "isAllowedInFilters")]
+        public bool IsAllowedInFilters { get; set; }
+        [DataMember(Name = "isAllowedInQuotas")]
+        public bool IsAllowedInQuotas { get; set; }
+        [DataMember(Name = "localizedText")]
+        public string LocalizedText { get; set; }
         [DataMember(Name = "name")]
         public string Name { get; set; }
-        [DataMember(Name = "text")]
-        public string Text { get; set; }
-        [DataMember(Name = "type")]
-        public string Type { get; set; }
         [DataMember(Name = "options")]
         public AttributeOption[] Options { get; set; }
+        [DataMember(Name = "state")]
+        public string State { get; set; }
+        [DataMember(Name = "text")]
+        public string Text { get; set; }
+        [DataMember(Name = "tier")]
+        public string Tier { get; set; }
+        [DataMember(Name = "type")]
+        public string Type { get; set; }
+        
     }
 
     [DataContract]
@@ -385,6 +404,28 @@ namespace Dynata.SamplifyAPIClient
     {
         [DataMember(Name = "id")]
         public string ID { get; set; }
+        [DataMember(Name = "localizedText")]
+        public string LocalizedText { get; set; }
+        [DataMember(Name = "text")]
+        public string Text { get; set; }
+    }
+
+    [DataContract]
+    public class AttributeCategory
+    {
+        [DataMember(Name = "mainCategory")]
+        public AttrCategory ID { get; set; }
+        [DataMember(Name = "subCategory")]
+        public AttrCategory LocalizedText { get; set; }
+    }
+
+    [DataContract]
+    public class AttrCategory
+    {
+        [DataMember(Name = "id")]
+        public string ID { get; set; }
+        [DataMember(Name = "localizedText")]
+        public string LocalizedText { get; set; }
         [DataMember(Name = "text")]
         public string Text { get; set; }
     }
