@@ -55,7 +55,7 @@ namespace Dynata.SamplifyAPIClient
     // Filtering/Sorting and pagination params for GET endpoints that return an array object
     public class QueryOptions
     {
-        private const uint _maxLimit = 50;
+        private const uint _maxLimit = 100;
 
         public List<Filter> FilterBy { get; set; }
         public List<Sort> SortBy { get; set; }
