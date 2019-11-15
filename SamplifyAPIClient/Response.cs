@@ -114,6 +114,20 @@ namespace Dynata.SamplifyAPIClient
     }
 
     [DataContract]
+    public class DetailedProjectReportResponse : Response
+    {
+        [DataMember(Name = "data")]
+        public DetailedProjectReport Data { get; set; }
+    }
+
+    [DataContract]
+    public class DetailedLineItemReportResponse : Response
+    {
+        [DataMember(Name = "data")]
+        public DetailedLieneItemReport Data { get; set; }
+    }
+
+    [DataContract]
     public class EndLinksResponse : Response
     {
         [DataMember(Name = "data")]

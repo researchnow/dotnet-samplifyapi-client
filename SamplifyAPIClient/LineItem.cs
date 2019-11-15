@@ -303,6 +303,87 @@ namespace Dynata.SamplifyAPIClient
     }
 
     [DataContract]
+    public class DetailedLineItemReport
+    {
+        [DataMember(Name = "extLineItemId")]
+        public string ExtLineItemID { get; set; }
+        [DataMember(Name = "state")]
+        public string State { get; set; }
+        [DataMember(Name = "stateReason")]
+        public string StateReason { get; set; }
+        [DataMember(Name = "title")]
+        public string Title { get; set; }
+        [DataMember(Name = "countryISOCode")]
+        public string CountryISOCode { get; set; }
+        [DataMember(Name = "languageISOCode")]
+        public string LanguageISOCode { get; set; }
+        [DataMember(Name = "sources")]
+        public Source[] Source { get; set; }
+        [DataMember(Name = "stats")]
+        public DetailedStats Stats { get; set; }
+        [DataMember(Name = "cost")]
+        public Cost Cost { get; set; }
+        [DataMember(Name = "quotaGroups")]
+        public DetailedQuotaGroupReport[] QuotaGroups { get; set; }
+    }
+
+    [DataContract]
+    public class DetailedQuotaGroupReport
+    {
+        [DataMember(Name = "quotaGroupId")]
+        public string QuotaGroupId { get; set; }
+        [DataMember(Name = "stats")]
+        public DetailedStats Stats { get; set; }
+        [DataMember(Name = "quotaCells")]
+        public DetailedQuotaCellReport[] QuotaCells { get; set; }
+    }
+
+    [DataContract]
+    public class DetailedQuotaCellReport
+    {
+        [DataMember(Name = "quotaCellId")]
+        public string QuotaCellId { get; set; }
+        [DataMember(Name = "quotaNodes")]
+        public QuotaNode[] QuotaNodes { get; set; }
+        [DataMember(Name = "stats")]
+        public DetailedStats Stats { get; set; }
+    }
+
+    [DataContract]
+    public class Cost
+    {
+        [DataMember(Name = "costPerUnit")]
+        public decimal CostPerUnit { get; set; }
+        [DataMember(Name = "currency")]
+        public string Currency { get; set; }
+        [DataMember(Name = "estimatedCost")]
+        public decimal EstimatedCost { get; set; }
+        [DataMember(Name = "incurredCost")]
+        public decimal IncurredCost { get; set; }
+        [DataMember(Name = "detailedCost")]
+        public DetailedCost[] DetailedCost { get; set; }
+    }
+
+    [DataContract]
+    public class DetailedCost
+    {
+        [DataMember(Name = "costPerUnit")]
+        public decimal CostPerUnit { get; set; }
+        [DataMember(Name = "title")]
+        public string Title { get; set; }
+        [DataMember(Name = "type")]
+        public CostType Type { get; set; }
+        [DataMember(Name = "estimatedCost")]
+        public decimal EstimatedCost { get; set; }
+        [DataMember(Name = "incurredCost")]
+        public decimal IncurredCost { get; set; }
+        [DataMember(Name = "deliveredUnits")]
+        public int DeliveredUnits { get; set; }
+        [DataMember(Name = "requestedUnits")]
+        public int RequestedUnits { get; set; }
+    }
+
+    [DataContract]
     public class Feasibility
     {
         [DataMember(Name = "status")]

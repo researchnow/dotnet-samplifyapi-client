@@ -293,6 +293,23 @@ namespace Dynata.SamplifyAPIClient
             return await this.RequestAndParseResponse<GetUserInfoResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
 
+        //GetDetailedProjectReport
+        public async Task<DetailedProjectReportResponse> GetDetailedProjectReport(string extProjectID)
+        {
+            Validator.IsNonEmptyString(extProjectID);
+            string path = string.Format("/projects/{0}/detailedReport", extProjectID);
+            return await this.RequestAndParseResponse<DetailedProjectReportResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
+        }
+
+        //GetDetailedLineItemReport
+        public async Task<DetailedLineItemReportResponse> GetDetailedLineItemReport(string extProjectID, string extLineItemID)
+        {
+            Validator.IsNonEmptyString(extProjectID);
+            Validator.IsNonEmptyString(extLineItemID);
+            string path = string.Format("/projects/{0}/lineItems/{1}/detailedReport", extProjectID, extLineItemID);
+            return await this.RequestAndParseResponse<DetailedLineItemReportResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
+        }
+
         //Auth
         public async Task<bool> RefreshToken()
         {
