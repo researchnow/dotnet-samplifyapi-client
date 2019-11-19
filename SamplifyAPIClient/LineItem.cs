@@ -80,9 +80,9 @@ namespace Dynata.SamplifyAPIClient
         [DataMember(Name = "quotaNodes")]
         public QuotaNode[] QuotaNodes { get; set; }
         [DataMember(Name = "count")]
-        public int Count { get; set; }
+        public int? Count { get; set; }
         [DataMember(Name = "perc")]
-        public int Perc { get; set; }
+        public int? Perc { get; set; }
         [DataMember(Name = "quotaCellId")]
         public string QuotaCellID { get; set; }
     }
@@ -238,8 +238,6 @@ namespace Dynata.SamplifyAPIClient
             Validator.IsNonEmptyString(this.ExtLineItemID, this.Title, this.CountryISOCode, this.LanguageISOCode);
             Validator.IsCountryCodeOrNull(this.CountryISOCode);
             Validator.IsLanguageCodeOrNull(this.LanguageISOCode);
-            Validator.IsUrlOrNull(this.SurveyURL);
-            Validator.IsUrlOrNull(this.SurveyTestURL);
             Validator.IsNonZero<decimal>(this.IndicativeIncidence);
             Validator.IsNonZero<int>(this.DaysInField);
             Validator.IsNonZero<int>(this.LengthOfInterview);
