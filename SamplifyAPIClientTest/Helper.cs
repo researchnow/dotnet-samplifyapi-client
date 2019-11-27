@@ -1,5 +1,5 @@
 ﻿using System;
-using ResearchNow.SamplifyAPIClient;
+using Dynata.SamplifyAPIClient;
 
 namespace SamplifyAPIClientTest
 {
@@ -47,12 +47,12 @@ namespace SamplifyAPIClientTest
                         new QuotaCell
                         {
                             QuotaNodes = new QuotaNode[] {new QuotaNode{AttributeID = "11", OptionIDs = new string[]{"1"}}},
-                            Perc=30M
+                            Perc=30
                         },
                         new QuotaCell
                         {
                             QuotaNodes = new QuotaNode[] {new QuotaNode{AttributeID = "11", OptionIDs = new string[]{"2"}}},
-                            Perc=70M
+                            Perc=70
                         }
                     }
                 }
