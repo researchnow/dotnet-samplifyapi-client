@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Net.Http;
-using ResearchNow.SamplifyAPIClient;
+using Dynata.SamplifyAPIClient;
 using Xunit;
 
 namespace SamplifyAPIClientTest
@@ -64,7 +64,7 @@ namespace SamplifyAPIClientTest
             testClient.UpdateLineItemState("test-prj-id", "test-lineitem-id", ActionConstants.ActionPaused).Wait();
             testClient.GetAllLineItems("test-prj-id", null).Wait();
             testClient.GetLineItemBy("test-prj-id", "test-lineitem-id").Wait();
-            testClient.GetFeasibility("test-prj-id", null).Wait();
+            testClient.GetFeasibility("test-prj-id").Wait();
             testClient.GetCountries(null).Wait();
             testClient.GetAttributes("GB", "en", null).Wait();
             testClient.GetSurveyTopics(null).Wait();
