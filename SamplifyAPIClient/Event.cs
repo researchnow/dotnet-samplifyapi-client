@@ -17,6 +17,8 @@ namespace Dynata.SamplifyAPIClient
     {
         [DataMember(Name = "actions", IsRequired = false, EmitDefaultValue = false)]
         public Actions Actions { get; set; }
+        [DataMember(Name = "details", IsRequired = false, EmitDefaultValue = false)]
+        public EventDetails Details { get; set; }
         [DataMember(Name = "eventId")]
         public long EventID { get; set; }
         [DataMember(Name = "eventType")]
@@ -34,6 +36,24 @@ namespace Dynata.SamplifyAPIClient
 
         [IgnoreDataMember]
         public DateTime? CreatedAt => Util.ConvertToDateTimeNullable(RawDTStringCreatedAt);
+    }
+
+    [DataContract]
+    public class EventReason
+    {
+        [DataMember(Name = "code")]
+        public string Code { get; set; }
+        [DataMember(Name = "description")]
+        public string Description { get; set; }
+    }
+
+    [DataContract]
+    public class EventDetails
+    {
+        [DataMember(Name = "comments")]
+        public string Comments { get; set; }
+        [DataMember(Name = "reasons", IsRequired = false, EmitDefaultValue = false)]
+        public EventReason[] Reasons { get; set; }
     }
 
     [DataContract]
