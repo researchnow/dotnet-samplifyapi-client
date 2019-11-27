@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using ResearchNow.SamplifyAPIClient;
+using Dynata.SamplifyAPIClient;
 
 namespace SamplifyAPIClientTest
 {
