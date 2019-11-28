@@ -372,7 +372,7 @@ namespace Dynata.SamplifyAPIClient
         [DataMember(Name = "title")]
         public string Title { get; set; }
         [DataMember(Name = "type")]
-        public CostType Type { get; set; }
+        public string Type { get; set; }
         [DataMember(Name = "estimatedCost")]
         public decimal EstimatedCost { get; set; }
         [DataMember(Name = "incurredCost")]

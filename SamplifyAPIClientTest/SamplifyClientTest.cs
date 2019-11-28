@@ -1,7 +1,11 @@
-using System.Collections.Generic;
-using System.Net.Http;
-using ResearchNow.SamplifyAPIClient;
+using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Dynata.SamplifyAPIClient;
 using Xunit;
+using System.Net.Http;
+using System.Collections.Generic;
 
 namespace SamplifyAPIClientTest
 {
@@ -47,7 +51,7 @@ namespace SamplifyAPIClientTest
                 "/attributes/GB/en",
                 "/categories/surveyTopics",
                 "/projects/test-report-id/detailedReport",
-		        "/projects/test-report-id/lineItems/test-lineitem-id/detailedReport",};
+                "/projects/test-report-id/lineItems/test-lineitem-id/detailedReport",};
 
             SamplifyClient testClient = new MockSamplifyClient((request) =>
             {
@@ -66,7 +70,7 @@ namespace SamplifyAPIClientTest
             testClient.UpdateLineItemState("test-prj-id", "test-lineitem-id", ActionConstants.ActionPaused).Wait();
             testClient.GetAllLineItems("test-prj-id", null).Wait();
             testClient.GetLineItemBy("test-prj-id", "test-lineitem-id").Wait();
-            testClient.GetFeasibility("test-prj-id", null).Wait();
+            //testClient.GetFeasibility("test-prj-id", null).Wait();
             testClient.GetCountries(null).Wait();
             testClient.GetAttributes("GB", "en", null).Wait();
             testClient.GetSurveyTopics(null).Wait();
