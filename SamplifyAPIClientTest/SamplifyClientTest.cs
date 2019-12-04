@@ -1,11 +1,8 @@
-using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+
+using System.Collections.Generic;
+using System.Net.Http;
 using Dynata.SamplifyAPIClient;
 using Xunit;
-using System.Net.Http;
-using System.Collections.Generic;
 
 namespace SamplifyAPIClientTest
 {
