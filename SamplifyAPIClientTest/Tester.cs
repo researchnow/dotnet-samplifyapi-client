@@ -92,12 +92,21 @@ namespace SamplifyAPIClientTest
             //GetAttributesResponse myVar11 = await testClient.GetAttributes("US", "en", null);
             //tmp = JsonConvert.SerializeObject(myVar11);
             //Trace.WriteLine(tmp);
-            
+
             //// WORKS
             //Trace.WriteLine("GetEvent: ");
             //EventResponse myVar12 = await testClient.GetEventBy(223);
             //string tmp12 = JsonConvert.SerializeObject(myVar12);
             //Trace.WriteLine(tmp12);
+
+            Trace.WriteLine("GetDetailedProjectReport: ");
+            DetailedProjectReportResponse myVar12 = await testClient.GetDetailedProjectReport("002e5bba-523f-4a07-87a3-552a950577c6");
+            tmp = JsonConvert.SerializeObject(myVar12);
+            Trace.WriteLine(tmp);
+            Trace.WriteLine("GetDetailedLineitemReport: ");
+            DetailedLineItemReportResponse myVar13 = await testClient.GetDetailedLineItemReport("002e5bba-523f-4a07-87a3-552a950577c6", "etem_qf1111");
+            tmp = JsonConvert.SerializeObject(myVar13);
+            Trace.WriteLine(tmp);
         }
     }
 }
