@@ -33,7 +33,7 @@ namespace SamplifyAPIClientTest
         public void TestEndpoints()
         {
             var messages = new List<HttpRequestMessage>();
-            string[] tests = new string[]{
+            string[] tests = {
                 "/projects",
                 "/projects/project001",
                 "/projects/buy-test/buy",
@@ -70,7 +70,7 @@ namespace SamplifyAPIClientTest
             testClient.UpdateLineItemState("test-prj-id", "test-lineitem-id", ActionConstants.ActionPaused).Wait();
             testClient.GetAllLineItems("test-prj-id", null).Wait();
             testClient.GetLineItemBy("test-prj-id", "test-lineitem-id").Wait();
-            //testClient.GetFeasibility("test-prj-id", null).Wait();
+            testClient.GetFeasibility("test-prj-id").Wait();
             testClient.GetCountries(null).Wait();
             testClient.GetAttributes("GB", "en", null).Wait();
             testClient.GetSurveyTopics(null).Wait();

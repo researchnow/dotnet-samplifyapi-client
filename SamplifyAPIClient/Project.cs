@@ -205,6 +205,8 @@ namespace Dynata.SamplifyAPIClient
         public string State { get; set; }
         [DataMember(Name = "title")]
         public string Title { get; set; }
+        [DataMember(Name = "stats")]
+        public DetailedStats Stats { get; set; }
         [DataMember(Name = "lineItems")]
         public DetailedLineItemReport[] LineItems { get; set; }
     }
@@ -230,12 +232,6 @@ namespace Dynata.SamplifyAPIClient
         public decimal IncidenceRate { get; set; }
         [DataMember(Name = "remainingCompletes")]
         public int RemainingCompletes { get; set; }
-        [DataMember(Name = "actualMedianLOI")]
-        public int ActualMedianLOI { get; set; }
-        [DataMember(Name = "incurredCost")]
-        public decimal IncurredCost { get; set; }
-        [DataMember(Name = "estimatedCost")]
-        public decimal EstimatedCost { get; set; }
         [DataMember(Name = "completesRefused")]
         public int CompletesRefused { get; set; }
         [DataMember(Name = "completesRefusedPercentage")]
@@ -243,11 +239,7 @@ namespace Dynata.SamplifyAPIClient
         [DataMember(Name = "incompletes")]
         public int Incompletes { get; set; }
         [DataMember(Name = "incompletesPercentage")]
-        public int IncompletesPercentage { get; set; }
-        [DataMember(Name = "LastAcceptedIncidenceRate")]
-        public decimal LastAcceptedIncidenceRate { get; set; }
-        [DataMember(Name = "LastAcceptedLOI")]
-        public decimal LastAcceptedLOI { get; set; }
+        public decimal IncompletesPercentage { get; set; }
     }
     // Represents Survey Topic for a project. Required to setup a project.
     [DataContract]

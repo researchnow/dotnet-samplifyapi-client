@@ -320,11 +320,48 @@ namespace Dynata.SamplifyAPIClient
         [DataMember(Name = "sources")]
         public Source[] Source { get; set; }
         [DataMember(Name = "stats")]
-        public DetailedStats Stats { get; set; }
+        public DetailedLineItemStats Stats { get; set; }
         [DataMember(Name = "cost")]
         public Cost Cost { get; set; }
-        [DataMember(Name = "quotaGroups")]
+        [DataMember(Name = "quotaGroups", IsRequired = false, EmitDefaultValue = false)]
         public DetailedQuotaGroupReport[] QuotaGroups { get; set; }
+    }
+
+    [DataContract]
+    public class DetailedLineItemStats
+    {
+        [DataMember(Name = "attempts")]
+        public int Attempts { get; set; }
+        [DataMember(Name = "completes")]
+        public int Completes { get; set; }
+        [DataMember(Name = "screenouts")]
+        public int Screenouts { get; set; }
+        [DataMember(Name = "screenoutsPercentage")]
+        public decimal ScreenoutsPercentage { get; set; }
+        [DataMember(Name = "overquotas")]
+        public int Overquotas { get; set; }
+        [DataMember(Name = "overquotasPercentage")]
+        public decimal OverquotasPercentage { get; set; }
+        [DataMember(Name = "conversion")]
+        public decimal Conversion { get; set; }
+        [DataMember(Name = "incidenceRate")]
+        public decimal IncidenceRate { get; set; }
+        [DataMember(Name = "remainingCompletes")]
+        public int RemainingCompletes { get; set; }
+        [DataMember(Name = "actualMedianLOI", IsRequired = false)]
+        public int ActualMedianLOI { get; set; }
+        [DataMember(Name = "completesRefused")]
+        public int CompletesRefused { get; set; }
+        [DataMember(Name = "completesRefusedPercentage")]
+        public decimal CompletesRefusedPercentage { get; set; }
+        [DataMember(Name = "incompletes")]
+        public int Incompletes { get; set; }
+        [DataMember(Name = "incompletesPercentage")]
+        public decimal IncompletesPercentage { get; set; }
+        [DataMember(Name = "lastAcceptedIncidenceRate", IsRequired = false)]
+        public decimal LastAcceptedIncidenceRate { get; set; }
+        [DataMember(Name = "lastAcceptedLOI", IsRequired = false)]
+        public int LastAcceptedLOI { get; set; }
     }
 
     [DataContract]
