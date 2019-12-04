@@ -303,6 +303,124 @@ namespace Dynata.SamplifyAPIClient
     }
 
     [DataContract]
+    public class DetailedLineItemReport
+    {
+        [DataMember(Name = "extLineItemId")]
+        public string ExtLineItemID { get; set; }
+        [DataMember(Name = "state")]
+        public string State { get; set; }
+        [DataMember(Name = "stateReason")]
+        public string StateReason { get; set; }
+        [DataMember(Name = "title")]
+        public string Title { get; set; }
+        [DataMember(Name = "countryISOCode")]
+        public string CountryISOCode { get; set; }
+        [DataMember(Name = "languageISOCode")]
+        public string LanguageISOCode { get; set; }
+        [DataMember(Name = "sources")]
+        public Source[] Source { get; set; }
+        [DataMember(Name = "stats")]
+        public DetailedLineItemStats Stats { get; set; }
+        [DataMember(Name = "cost")]
+        public Cost Cost { get; set; }
+        [DataMember(Name = "quotaGroups", IsRequired = false, EmitDefaultValue = false)]
+        public DetailedQuotaGroupReport[] QuotaGroups { get; set; }
+    }
+
+    [DataContract]
+    public class DetailedLineItemStats
+    {
+        [DataMember(Name = "attempts")]
+        public int Attempts { get; set; }
+        [DataMember(Name = "completes")]
+        public int Completes { get; set; }
+        [DataMember(Name = "screenouts")]
+        public int Screenouts { get; set; }
+        [DataMember(Name = "screenoutsPercentage")]
+        public decimal ScreenoutsPercentage { get; set; }
+        [DataMember(Name = "overquotas")]
+        public int Overquotas { get; set; }
+        [DataMember(Name = "overquotasPercentage")]
+        public decimal OverquotasPercentage { get; set; }
+        [DataMember(Name = "conversion")]
+        public decimal Conversion { get; set; }
+        [DataMember(Name = "incidenceRate")]
+        public decimal IncidenceRate { get; set; }
+        [DataMember(Name = "remainingCompletes")]
+        public int RemainingCompletes { get; set; }
+        [DataMember(Name = "actualMedianLOI", IsRequired = false)]
+        public int ActualMedianLOI { get; set; }
+        [DataMember(Name = "completesRefused")]
+        public int CompletesRefused { get; set; }
+        [DataMember(Name = "completesRefusedPercentage")]
+        public decimal CompletesRefusedPercentage { get; set; }
+        [DataMember(Name = "incompletes")]
+        public int Incompletes { get; set; }
+        [DataMember(Name = "incompletesPercentage")]
+        public decimal IncompletesPercentage { get; set; }
+        [DataMember(Name = "lastAcceptedIncidenceRate", IsRequired = false)]
+        public decimal LastAcceptedIncidenceRate { get; set; }
+        [DataMember(Name = "lastAcceptedLOI", IsRequired = false)]
+        public int LastAcceptedLOI { get; set; }
+    }
+
+    [DataContract]
+    public class DetailedQuotaGroupReport
+    {
+        [DataMember(Name = "quotaGroupId")]
+        public string QuotaGroupId { get; set; }
+        [DataMember(Name = "stats")]
+        public DetailedStats Stats { get; set; }
+        [DataMember(Name = "quotaCells")]
+        public DetailedQuotaCellReport[] QuotaCells { get; set; }
+    }
+
+    [DataContract]
+    public class DetailedQuotaCellReport
+    {
+        [DataMember(Name = "quotaCellId")]
+        public string QuotaCellId { get; set; }
+        [DataMember(Name = "quotaNodes")]
+        public QuotaNode[] QuotaNodes { get; set; }
+        [DataMember(Name = "stats")]
+        public DetailedStats Stats { get; set; }
+    }
+
+    [DataContract]
+    public class Cost
+    {
+        [DataMember(Name = "costPerUnit")]
+        public decimal CostPerUnit { get; set; }
+        [DataMember(Name = "currency")]
+        public string Currency { get; set; }
+        [DataMember(Name = "estimatedCost")]
+        public decimal EstimatedCost { get; set; }
+        [DataMember(Name = "incurredCost")]
+        public decimal IncurredCost { get; set; }
+        [DataMember(Name = "detailedCost")]
+        public DetailedCost[] DetailedCost { get; set; }
+    }
+
+    [DataContract]
+    public class DetailedCost
+    {
+        [DataMember(Name = "costPerUnit")]
+        public decimal CostPerUnit { get; set; }
+        [DataMember(Name = "title")]
+        public string Title { get; set; }
+        [DataMember(Name = "type")]
+        public string Type { get; set; }
+        [DataMember(Name = "estimatedCost")]
+        public decimal EstimatedCost { get; set; }
+        [DataMember(Name = "incurredCost")]
+        public decimal IncurredCost { get; set; }
+        [DataMember(Name = "deliveredUnits")]
+        public int DeliveredUnits { get; set; }
+        [DataMember(Name = "requestedUnits")]
+        public int RequestedUnits { get; set; }
+    }
+
+    [DataContract]
     public class Feasibility
     {
         [DataMember(Name = "status")]

@@ -1,3 +1,4 @@
+
 using System.Collections.Generic;
 using System.Net.Http;
 using Dynata.SamplifyAPIClient;
@@ -29,7 +30,7 @@ namespace SamplifyAPIClientTest
         public void TestEndpoints()
         {
             var messages = new List<HttpRequestMessage>();
-            string[] tests = new string[]{
+            string[] tests = {
                 "/projects",
                 "/projects/project001",
                 "/projects/buy-test/buy",
@@ -45,7 +46,9 @@ namespace SamplifyAPIClientTest
                 "/projects/test-prj-id/feasibility",
                 "/countries",
                 "/attributes/GB/en",
-                "/categories/surveyTopics"};
+                "/categories/surveyTopics",
+                "/projects/test-report-id/detailedReport",
+                "/projects/test-report-id/lineItems/test-lineitem-id/detailedReport",};
 
             SamplifyClient testClient = new MockSamplifyClient((request) =>
             {
@@ -68,6 +71,8 @@ namespace SamplifyAPIClientTest
             testClient.GetCountries(null).Wait();
             testClient.GetAttributes("GB", "en", null).Wait();
             testClient.GetSurveyTopics(null).Wait();
+            testClient.GetDetailedProjectReport("test-report-id").Wait();
+            testClient.GetDetailedLineItemReport("test-report-id", "test-lineitem-id").Wait();
 
             Assert.Equal<int>(messages.Count, tests.Length);
             for (int i = 0; i < tests.Length; i++)

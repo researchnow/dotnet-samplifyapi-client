@@ -195,6 +195,52 @@ namespace Dynata.SamplifyAPIClient
         public LineItemReport[] LineItems { get; set; }
     }
 
+    [DataContract]
+    public class DetailedProjectReport
+    {
+
+        [DataMember(Name = "extProjectId")]
+        public string ExtProjectID { get; set; }
+        [DataMember(Name = "state")]
+        public string State { get; set; }
+        [DataMember(Name = "title")]
+        public string Title { get; set; }
+        [DataMember(Name = "stats")]
+        public DetailedStats Stats { get; set; }
+        [DataMember(Name = "lineItems")]
+        public DetailedLineItemReport[] LineItems { get; set; }
+    }
+
+   [DataContract]
+    public class DetailedStats
+    {
+        [DataMember(Name = "attempts")]
+        public int Attempts { get; set; }
+        [DataMember(Name = "completes")]
+        public int Completes { get; set; }
+        [DataMember(Name = "screenouts")]
+        public int Screenouts { get; set; }
+        [DataMember(Name = "screenoutsPercentage")]
+        public decimal ScreenoutsPercentage { get; set; }
+        [DataMember(Name = "overquotas")]
+        public int Overquotas { get; set; }
+        [DataMember(Name = "overquotasPercentage")]
+        public decimal OverquotasPercentage { get; set; }
+        [DataMember(Name = "conversion")]
+        public decimal Conversion { get; set; }
+        [DataMember(Name = "incidenceRate")]
+        public decimal IncidenceRate { get; set; }
+        [DataMember(Name = "remainingCompletes")]
+        public int RemainingCompletes { get; set; }
+        [DataMember(Name = "completesRefused")]
+        public int CompletesRefused { get; set; }
+        [DataMember(Name = "completesRefusedPercentage")]
+        public decimal CompletesRefusedPercentage { get; set; }
+        [DataMember(Name = "incompletes")]
+        public int Incompletes { get; set; }
+        [DataMember(Name = "incompletesPercentage")]
+        public decimal IncompletesPercentage { get; set; }
+    }
     // Represents Survey Topic for a project. Required to setup a project.
     [DataContract]
     public class SurveyTopic
