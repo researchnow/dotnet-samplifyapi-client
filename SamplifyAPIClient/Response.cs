@@ -232,6 +232,15 @@ namespace Dynata.SamplifyAPIClient
         public SurveyTopic[] Data { get; set; }
     }
 
+    [DataContract]
+    public class GetInvoicesSummaryResponse : Response
+    {
+        [DataMember(Name = "data")]
+        public byte[] Data { get; set; }
+        [DataMember(Name="requestID")]
+        public string RequestID { get; set; }
+    }
+
     // ResponseStatus is the custom status part in API response.
     [DataContract]
     public class ResponseStatus
