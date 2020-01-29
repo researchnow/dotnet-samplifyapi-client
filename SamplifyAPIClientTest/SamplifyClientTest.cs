@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Net.Http;
 using Dynata.SamplifyAPIClient;
 using Xunit;
+using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace SamplifyAPIClientTest
 {
     public class SamplifyClientTest
-    {
+    { 
         [Fact]
-        public void TestAuth()
+        public void TestAth()
         {
             const string testToken = "test-token";
             const string expectedToken = "Bearer test-token";

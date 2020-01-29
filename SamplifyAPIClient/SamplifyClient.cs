@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Text;
 
 namespace Dynata.SamplifyAPIClient
 {
@@ -8,6 +9,7 @@ namespace Dynata.SamplifyAPIClient
     {
         UAT = 0, //Use uat environment
         Prod = 1, //Use prod environment
+        DEV = 2, // Use dev environment
         CheckProcessEnv = 3, //Check process environment variable 'env' to determine. (default = uat)
     }
 
@@ -28,7 +30,11 @@ namespace Dynata.SamplifyAPIClient
             {
                 this.APIBaseURL = HostConstants.ProdAPIBaseURL;
                 this.AuthURL = HostConstants.ProdAuthBaseURL;
+            } else if (SamplifyEnv.DEV == env) {
+                this.APIBaseURL = HostConstants.DEVAPIBaseURL;
+                this.AuthURL = HostConstants.DEVAuthBaseURL;
             }
+         
             this.Credentials = new TokenRequest(clientID, username, password);
             this.Request = new Request();
             this.Auth = new TokenResponse();
@@ -187,6 +193,24 @@ namespace Dynata.SamplifyAPIClient
             Validator.IsNonEmptyString(extProjectID);
             string path = string.Format("/projects/{0}/close", extProjectID);
             return await this.RequestAndParseResponse<CloseProjectResponse>(HttpMethod.Post, path, null).ConfigureAwait(false);
+        }
+
+        public async Task<GetInvoicesSummaryResponse> GetInvoicesSummary(QueryOptions options)
+        {
+            string query = "";
+            if (options != null)
+            {
+                query = options.ToString();
+            }
+            string path = string.Format("/projects/invoices/summary{0}", query);
+
+            APIResponse api = await this.Fetch(HttpMethod.Get, path, null).ConfigureAwait(false);
+
+            GetInvoicesSummaryResponse response = new GetInvoicesSummaryResponse();
+            response.Data = Encoding.ASCII.GetBytes(api.Body);
+            response.RequestID = api.RequestID;
+
+            return response;
         }
 
         // TODO - Invoices
@@ -451,10 +475,18 @@ namespace Dynata.SamplifyAPIClient
 
         internal static class HostConstants
         {
+            // PROD
             internal const string ProdAuthBaseURL = "https://api.Dynata.com/auth/v1";
             internal const string ProdAPIBaseURL = "https://api.Dynata.com/sample/v1";
+
+            // UAT
             internal const string UATAuthBaseURL = "https://api.uat.pe.Dynata.com/auth/v1";
             internal const string UATAPIBaseURL = "https://api.uat.pe.Dynata.com/sample/v1";
+
+            // DEV
+            internal const string DEVAPIBaseURL = "https://api.dev.pe.dynata.com/sample/v1";
+            internal const string DEVAuthBaseURL = "https://api.dev.pe.dynata.com/auth/v1";
+
             internal const string UnitTextAPIBaseURL = "http://172.0.0.1";
             internal const string UnitTextAuthURL = "http://172.0.0.1/auth/v1/token/password";
         }
