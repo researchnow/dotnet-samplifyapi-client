@@ -21,6 +21,7 @@ namespace Dynata.SamplifyAPIClient
         }
         internal async Task<APIResponse> Send(string host, HttpMethod method, string url, string accessToken, object body)
         {
+    
             if (!string.IsNullOrEmpty(accessToken))
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
@@ -29,12 +30,21 @@ namespace Dynata.SamplifyAPIClient
             string data = string.Empty;
             if (body != null)
             {
-                data = Util.Serialize(body);
+                data = Util.Serialize(body); 
                 msg.Content = new StringContent(data, System.Text.Encoding.UTF8, "application/json");
             }
             var res = await client.SendAsync(msg).ConfigureAwait(false);
-            string json = await res.Content.ReadAsStringAsync().ConfigureAwait(false);
+
             var reqID = this.GetHeaderValue(res.Headers, "x-request-id");
+
+            if (res.IsSuccessStatusCode && res.Content.Headers.ContentType.MediaType == "application/pdf")
+            {
+                byte[] rawMsg = await res.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+                return new APIResponse(reqID, rawMsg, null);
+            }
+
+            string json = await res.Content.ReadAsStringAsync().ConfigureAwait(false);
+       
             if (!res.IsSuccessStatusCode)
             {
                 string errPath = string.Format("{0}{1}", host, url);
@@ -44,7 +54,6 @@ namespace Dynata.SamplifyAPIClient
                 err.HTTPCode = (int)res.StatusCode;
                 err.HTTPPhrase = res.ReasonPhrase;
                 err.Path = errPath;
-
                 return new APIResponse(reqID, json, err);
             }
             return new APIResponse(reqID, json, null);
@@ -63,9 +72,17 @@ namespace Dynata.SamplifyAPIClient
 
     internal class APIResponse
     {
+        internal byte[] BodyRaw { get; }
         internal string Body { get; }
         internal string RequestID { get; }
         internal ErrorResponse Error { get; }
+
+        internal APIResponse(string requestID, byte[] body, ErrorResponse err)
+        {
+            this.RequestID = requestID;
+            this.BodyRaw = body;
+            this.Error = err;
+        }
         internal APIResponse(string requestID, string body, ErrorResponse err)
         {
             this.RequestID = requestID;

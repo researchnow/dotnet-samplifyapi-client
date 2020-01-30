@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Dynata.SamplifyAPIClient;
 using Xunit;
 using System.IO;
@@ -18,20 +20,17 @@ namespace SamplifyAPIClientTest
             SamplifyClient client = new SamplifyClient("api", "test", "test", SamplifyEnv.DEV);
             client.GetAuth();
 
+            Trace.WriteLine("TestFoo");
+
             QueryOptions queryOptions = new QueryOptions();
             queryOptions.AddFilter("startDate", "2019-05-03");
             queryOptions.AddFilter("endDate", "2020-06-07");
             queryOptions.AddFilter("extProjectId", "011d1929-e2e1-4ea6-adbe-d73a5f79e43a");
 
-     
+
             GetInvoicesSummaryResponse getInvoicesSummaryResponse = await client.GetInvoicesSummary(queryOptions);
 
-            Trace.WriteLine(getInvoicesSummaryResponse.Data.Length);
-
-            File.Create("/Users/huy.vo/Desktop/test.pdf");
-
-            File.WriteAllBytes("/Users/huy.vo/Desktop/test.pdf", getInvoicesSummaryResponse.Data);
-
+            File.WriteAllBytes("/Users/huy.vo/Desktop/hello.pdf", getInvoicesSummaryResponse.Data);
             Trace.WriteLine("Done");
 
         }

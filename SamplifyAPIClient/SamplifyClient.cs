@@ -204,16 +204,16 @@ namespace Dynata.SamplifyAPIClient
             }
             string path = string.Format("/projects/invoices/summary{0}", query);
 
-            APIResponse api = await this.Fetch(HttpMethod.Get, path, null).ConfigureAwait(false);
+            APIResponse apiResponse = await this.Fetch(HttpMethod.Get, path, null).ConfigureAwait(false);
 
-            GetInvoicesSummaryResponse response = new GetInvoicesSummaryResponse();
-            response.Data = Encoding.ASCII.GetBytes(api.Body);
-            response.RequestID = api.RequestID;
+            GetInvoicesSummaryResponse response = new GetInvoicesSummaryResponse
+            {
+                RequestID = apiResponse.RequestID,
+                Data = apiResponse.BodyRaw,
+            };
 
             return response;
         }
-
-        // TODO - Invoices
 
         // TODO - Reconcile
 
