@@ -21,7 +21,7 @@ namespace Dynata.SamplifyAPIClient
         }
         internal async Task<APIResponse> Send(string host, HttpMethod method, string url, string accessToken, object body)
         {
-    
+ 
             if (!string.IsNullOrEmpty(accessToken))
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
@@ -40,7 +40,7 @@ namespace Dynata.SamplifyAPIClient
             if (res.IsSuccessStatusCode && res.Content.Headers.ContentType.MediaType == "application/pdf")
             {
                 byte[] rawMsg = await res.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-                return new APIResponse(reqID, rawMsg, null);
+                return new APIResponseRaw(reqID, rawMsg, null);
             }
 
             string json = await res.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -72,17 +72,9 @@ namespace Dynata.SamplifyAPIClient
 
     internal class APIResponse
     {
-        internal byte[] BodyRaw { get; }
         internal string Body { get; }
         internal string RequestID { get; }
         internal ErrorResponse Error { get; }
-
-        internal APIResponse(string requestID, byte[] body, ErrorResponse err)
-        {
-            this.RequestID = requestID;
-            this.BodyRaw = body;
-            this.Error = err;
-        }
         internal APIResponse(string requestID, string body, ErrorResponse err)
         {
             this.RequestID = requestID;
@@ -92,6 +84,17 @@ namespace Dynata.SamplifyAPIClient
         internal bool HasError => Error != null;
         internal bool Unauthorized => this.Error != null
                                         && this.Error.HTTPCode == (int)System.Net.HttpStatusCode.Unauthorized;
+    }
+
+    internal class APIResponseRaw: APIResponse
+    {
+        internal byte[] BodyRaw { get; }
+
+        internal APIResponseRaw(string requestID, byte[] bodyRaw, ErrorResponse err) : base(requestID, null, err)
+        {
+            this.BodyRaw = bodyRaw;
+        }
+
     }
 
 }

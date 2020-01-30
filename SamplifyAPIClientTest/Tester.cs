@@ -34,6 +34,7 @@ namespace SamplifyAPIClientTest
             Trace.WriteLine("Done");
 
         }
+
         //[Fact]
         //public async Task TestAll()
         //{
