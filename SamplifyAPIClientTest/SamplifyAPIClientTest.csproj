@@ -17,4 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SamplifyAPIClient\SamplifyAPIClient.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Tester.cs" />
+  </ItemGroup>
 </Project>
