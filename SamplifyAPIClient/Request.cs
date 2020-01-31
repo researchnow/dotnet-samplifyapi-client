@@ -51,7 +51,6 @@ namespace Dynata.SamplifyAPIClient
                 return new APIResponse(reqID, json, err);
             }
 
-            // The REST call was successful.
             if (res.Content.Headers.ContentType.MediaType == "application/pdf")
             {
                 byte[] rawMsg = await res.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
