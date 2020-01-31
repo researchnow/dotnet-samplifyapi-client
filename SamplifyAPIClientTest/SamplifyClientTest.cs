@@ -12,7 +12,7 @@ namespace SamplifyAPIClientTest
     public class SamplifyClientTest
     { 
         [Fact]
-        public void TestAth()
+        public void TestAuth()
         {
             const string testToken = "test-token";
             const string expectedToken = "Bearer test-token";

@@ -30,7 +30,8 @@ namespace Dynata.SamplifyAPIClient
             {
                 this.APIBaseURL = HostConstants.ProdAPIBaseURL;
                 this.AuthURL = HostConstants.ProdAuthBaseURL;
-            } else if (SamplifyEnv.DEV == env) {
+            } else if (SamplifyEnv.DEV == env)
+            {
                 this.APIBaseURL = HostConstants.DEVAPIBaseURL;
                 this.AuthURL = HostConstants.DEVAuthBaseURL;
             }

@@ -21,6 +21,5 @@
   <ItemGroup>
     <Compile Remove="Event.txt" />
     <Compile Remove="Order.cs" />
-    <Compile Remove="EmptyClassM.cs" />
   </ItemGroup>
 </Project>

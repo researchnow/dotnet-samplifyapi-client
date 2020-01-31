@@ -37,12 +37,6 @@ namespace Dynata.SamplifyAPIClient
 
             var reqID = this.GetHeaderValue(res.Headers, "x-request-id");
 
-            if (res.IsSuccessStatusCode && res.Content.Headers.ContentType.MediaType == "application/pdf")
-            {
-                byte[] rawMsg = await res.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-                return new APIResponseRaw(reqID, rawMsg, null);
-            }
-
             string json = await res.Content.ReadAsStringAsync().ConfigureAwait(false);
        
             if (!res.IsSuccessStatusCode)
@@ -56,6 +50,15 @@ namespace Dynata.SamplifyAPIClient
                 err.Path = errPath;
                 return new APIResponse(reqID, json, err);
             }
+
+            // The REST call was successful.
+            if (res.Content.Headers.ContentType.MediaType == "application/pdf")
+            {
+                byte[] rawMsg = await res.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+                return new APIResponseRaw(reqID, rawMsg, null);
+            }
+
+
             return new APIResponse(reqID, json, null);
         }
 
