@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using System;
 
 namespace Dynata.SamplifyAPIClient
 {
@@ -28,6 +29,25 @@ namespace Dynata.SamplifyAPIClient
         public const string ExclusionTypeTag = "TAG";
     }
 
+    public static class BillingTypeConstants
+    {
+        public const string BillingTypeMonthly = "AGGREGATED_MONTHLY";
+        public const string BillingTypePerProject = "PER_PROJECT";
+    }
+
+    [DataContract]
+    public class Billing
+    {
+        [DataMember(Name = "billingID")]
+        public string ID { get; set; }
+        [DataMember(Name = "type")]
+        public string BillingType { get; set; }
+        [DataMember(Name = "billingDate")]
+        public string RawDTStringBillingDate { get; set; }
+
+        [IgnoreDataMember]
+        public DateTime? BillingDate => Util.ConvertToDateTimeNullable(RawDTStringBillingDate);
+    }
     // Project's category
     [DataContract]
     public class Category : IValidator
@@ -71,6 +91,8 @@ namespace Dynata.SamplifyAPIClient
         public string State { get; set; }
         [DataMember(Name = "author")]
         public Author Author { get; set; }
+        [DataMember(Name = "billing")]
+        public Billing Billing { get; set; }
     }
 
     [DataContract]
