@@ -224,7 +224,8 @@ namespace Dynata.SamplifyAPIClient
     [DataContract]
     public class DetailedProjectReport
     {
-
+        [DataMember(Name = "jobNumber")]
+        public string JobNumber { get; set; }
         [DataMember(Name = "extProjectId")]
         public string ExtProjectID { get; set; }
         [DataMember(Name = "state")]
