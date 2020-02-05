@@ -93,6 +93,10 @@ namespace Dynata.SamplifyAPIClient
         public Author Author { get; set; }
         [DataMember(Name = "billing")]
         public Billing Billing { get; set; }
+        [DataMember(Name = "launchedAt")]
+        public string LaunchedAt { get; set; }
+        [DataMember(Name = "closedAt")]
+        public string ClosedAt { get; set; }
     }
 
     [DataContract]
