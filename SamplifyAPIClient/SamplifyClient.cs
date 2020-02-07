@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Text;
 
 namespace Dynata.SamplifyAPIClient
 {
@@ -28,7 +29,8 @@ namespace Dynata.SamplifyAPIClient
             {
                 this.APIBaseURL = HostConstants.ProdAPIBaseURL;
                 this.AuthURL = HostConstants.ProdAuthBaseURL;
-            }
+            } 
+         
             this.Credentials = new TokenRequest(clientID, username, password);
             this.Request = new Request();
             this.Auth = new TokenResponse();
@@ -189,10 +191,20 @@ namespace Dynata.SamplifyAPIClient
             return await this.RequestAndParseResponse<CloseProjectResponse>(HttpMethod.Post, path, null).ConfigureAwait(false);
         }
 
-        // TODO - Invoices
+        public async Task<GetInvoicesSummaryResponse> GetInvoicesSummary(QueryOptions options)
+        {
+            string query = "";
+            if (options != null)
+            {
+                query = options.ToString();
+            }
+            string path = string.Format("/projects/invoices/summary{0}", query);
+
+            return await this.RequestAndFetchBytes<GetInvoicesSummaryResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
+        }
+
 
         // TODO - Reconcile
-
         public async Task<ProjectReportResponse> GetProjectReport(string extProjectID)
         {
             Validator.IsNonEmptyString(extProjectID);
@@ -208,7 +220,7 @@ namespace Dynata.SamplifyAPIClient
         }
 
         // Feasibility
-        // TODO - Update this
+        // TODO - Update this  
         public async Task<GetFeasibilityResponse> GetFeasibility(string extProjectID)
         {
             Validator.IsNonEmptyString(extProjectID);
@@ -354,6 +366,40 @@ namespace Dynata.SamplifyAPIClient
             return res;
         }
 
+        private async Task<T> RequestAndFetchBytes<T>(HttpMethod method, string url, object body) where T: RawResponse, new()
+        {
+            T response = new T();
+            APIResponse api;
+
+            try
+            {
+                api = await Fetch(method, url, body).ConfigureAwait(false);
+            }catch (Exception e)
+            {
+                response.Fail(e);
+                return response;
+            }
+
+            if (api.HasError)
+            {
+                try
+                {
+                    response = (T)Util.Deserialize(api.Body, response.GetType());
+                }
+                catch (Exception e)
+                {
+                    response.Fail(e);
+                }
+                response.SetHTTPErrorResponse(api.Error);
+                return response;
+            }
+
+            response.Data = ((APIResponseRaw)api).BodyRaw;
+            response.RequestID = ((APIResponseRaw)api).RequestID;
+
+            return response;
+        }
+
         private async Task<T> RequestAndParseResponse<T>(HttpMethod method, string url, object body) where T : Response, new()
         {
             T response = new T();
@@ -451,10 +497,14 @@ namespace Dynata.SamplifyAPIClient
 
         internal static class HostConstants
         {
+            // PROD
             internal const string ProdAuthBaseURL = "https://api.Dynata.com/auth/v1";
             internal const string ProdAPIBaseURL = "https://api.Dynata.com/sample/v1";
+
+            // UAT
             internal const string UATAuthBaseURL = "https://api.uat.pe.Dynata.com/auth/v1";
             internal const string UATAPIBaseURL = "https://api.uat.pe.Dynata.com/sample/v1";
+
             internal const string UnitTextAPIBaseURL = "http://172.0.0.1";
             internal const string UnitTextAuthURL = "http://172.0.0.1/auth/v1/token/password";
         }

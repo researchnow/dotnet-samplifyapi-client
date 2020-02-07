@@ -21,6 +21,7 @@ namespace Dynata.SamplifyAPIClient
         }
         internal async Task<APIResponse> Send(string host, HttpMethod method, string url, string accessToken, object body)
         {
+ 
             if (!string.IsNullOrEmpty(accessToken))
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
@@ -29,14 +30,18 @@ namespace Dynata.SamplifyAPIClient
             string data = string.Empty;
             if (body != null)
             {
-                data = Util.Serialize(body);
+                data = Util.Serialize(body); 
                 msg.Content = new StringContent(data, System.Text.Encoding.UTF8, "application/json");
             }
             var res = await client.SendAsync(msg).ConfigureAwait(false);
-            string json = await res.Content.ReadAsStringAsync().ConfigureAwait(false);
+
             var reqID = this.GetHeaderValue(res.Headers, "x-request-id");
+
+            string json = await res.Content.ReadAsStringAsync().ConfigureAwait(false);
+
             if (!res.IsSuccessStatusCode)
             {
+                
                 string errPath = string.Format("{0}{1}", host, url);
                 ErrorResponse err = new ErrorResponse();
                 err.Timestamp = DateTime.Now;
@@ -44,9 +49,15 @@ namespace Dynata.SamplifyAPIClient
                 err.HTTPCode = (int)res.StatusCode;
                 err.HTTPPhrase = res.ReasonPhrase;
                 err.Path = errPath;
-
                 return new APIResponse(reqID, json, err);
             }
+
+            if (res.Content.Headers.ContentType.MediaType == "application/pdf")
+            {
+                byte[] rawMsg = await res.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+                return new APIResponseRaw(reqID, rawMsg, null);
+            }
+
             return new APIResponse(reqID, json, null);
         }
 
@@ -75,6 +86,17 @@ namespace Dynata.SamplifyAPIClient
         internal bool HasError => Error != null;
         internal bool Unauthorized => this.Error != null
                                         && this.Error.HTTPCode == (int)System.Net.HttpStatusCode.Unauthorized;
+    }
+
+    internal class APIResponseRaw: APIResponse
+    {
+        internal byte[] BodyRaw { get; }
+
+        internal APIResponseRaw(string requestID, byte[] bodyRaw, ErrorResponse err) : base(requestID, null, err)
+        {
+            this.BodyRaw = bodyRaw;
+        }
+
     }
 
 }
