@@ -38,9 +38,10 @@ namespace Dynata.SamplifyAPIClient
             var reqID = this.GetHeaderValue(res.Headers, "x-request-id");
 
             string json = await res.Content.ReadAsStringAsync().ConfigureAwait(false);
-       
+
             if (!res.IsSuccessStatusCode)
             {
+                
                 string errPath = string.Format("{0}{1}", host, url);
                 ErrorResponse err = new ErrorResponse();
                 err.Timestamp = DateTime.Now;
@@ -56,7 +57,6 @@ namespace Dynata.SamplifyAPIClient
                 byte[] rawMsg = await res.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
                 return new APIResponseRaw(reqID, rawMsg, null);
             }
-
 
             return new APIResponse(reqID, json, null);
         }

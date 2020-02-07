@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using System.Net.Http;
 using Dynata.SamplifyAPIClient;
@@ -10,7 +9,7 @@ using System.Threading.Tasks;
 namespace SamplifyAPIClientTest
 {
     public class SamplifyClientTest
-    { 
+    {
         [Fact]
         public void TestAuth()
         {
