@@ -82,14 +82,16 @@ namespace Dynata.SamplifyAPIClient
             this.Limit = limit;
         }
 
-        public void AddFilter(string field, object value)
+        public QueryOptions AddFilter(string field, object value)
         {
             this.FilterBy.Add(new Filter(field, value));
+            return this;
         }
 
-        public void AddSort(string field, SortDirection direction)
+        public QueryOptions AddSort(string field, SortDirection direction)
         {
             this.SortBy.Add(new Sort(field, direction));
+            return this;
         }
 
         public override string ToString()
