@@ -9,7 +9,6 @@ namespace Dynata.SamplifyAPIClient
     {
         UAT = 0, //Use uat environment
         Prod = 1, //Use prod environment
-        DEV = 2, // Use dev environment
         CheckProcessEnv = 3, //Check process environment variable 'env' to determine. (default = uat)
     }
 
@@ -30,11 +29,7 @@ namespace Dynata.SamplifyAPIClient
             {
                 this.APIBaseURL = HostConstants.ProdAPIBaseURL;
                 this.AuthURL = HostConstants.ProdAuthBaseURL;
-            } else if (SamplifyEnv.DEV == env)
-            {
-                this.APIBaseURL = HostConstants.DEVAPIBaseURL;
-                this.AuthURL = HostConstants.DEVAuthBaseURL;
-            }
+            } 
          
             this.Credentials = new TokenRequest(clientID, username, password);
             this.Request = new Request();
@@ -509,10 +504,6 @@ namespace Dynata.SamplifyAPIClient
             // UAT
             internal const string UATAuthBaseURL = "https://api.uat.pe.Dynata.com/auth/v1";
             internal const string UATAPIBaseURL = "https://api.uat.pe.Dynata.com/sample/v1";
-
-            // DEV
-            internal const string DEVAPIBaseURL = "https://api.dev.pe.dynata.com/sample/v1";
-            internal const string DEVAuthBaseURL = "https://api.dev.pe.dynata.com/auth/v1";
 
             internal const string UnitTextAPIBaseURL = "http://172.0.0.1";
             internal const string UnitTextAuthURL = "http://172.0.0.1/auth/v1/token/password";
