@@ -7,7 +7,7 @@
     <ReleaseVersion>1.0</ReleaseVersion>
     <SynchReleaseVersion>false</SynchReleaseVersion>
     <PackOnBuild>true</PackOnBuild>
-    <PackageVersion>0.0.1</PackageVersion>
+    <PackageVersion>0.0.6</PackageVersion>
     <Authors>Dynata</Authors>
     <Copyright>Copyright (c) 2019 Dynata</Copyright>
     <Owners>Dynata</Owners>
