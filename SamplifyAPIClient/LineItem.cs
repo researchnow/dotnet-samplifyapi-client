@@ -195,6 +195,9 @@ namespace Dynata.SamplifyAPIClient
         public Source[] Source { get; set; }
         [DataMember(Name = "targets")]
         public Target[] Target { get; set; }
+        [DataMember(Name = "surveyTestingNotes")]
+        public string SurveyTestingNotes { get; set; }
+
     }
 
     [DataContract]
@@ -234,6 +237,8 @@ namespace Dynata.SamplifyAPIClient
         public int RequiredCompletes { get; set; }
         [DataMember(Name = "quotaPlan", EmitDefaultValue = false)]
         public QuotaPlan QuotaPlan { get; set; }
+        [DataMember(Name = "surveyTestingNotes", EmitDefaultValue = false)]
+        public string SurveyTestingNotes { get; set; }
 
         void IValidator.IsValid()
         {
