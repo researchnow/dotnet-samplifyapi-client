@@ -1,7 +1,6 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Text;
 
 namespace Dynata.SamplifyAPIClient
 {
@@ -30,7 +29,7 @@ namespace Dynata.SamplifyAPIClient
                 this.APIBaseURL = HostConstants.ProdAPIBaseURL;
                 this.AuthURL = HostConstants.ProdAuthBaseURL;
             } 
-         
+ 
             this.Credentials = new TokenRequest(clientID, username, password);
             this.Request = new Request();
             this.Auth = new TokenResponse();
