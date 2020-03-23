@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using Dynata.SamplifyAPIClient;
 
 namespace SamplifyAPIClientTest
@@ -9,9 +10,11 @@ namespace SamplifyAPIClientTest
         public static ProjectCriteria GetTestProject()
         {
             Int32 timestamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+            StringBuilder projectID = new StringBuilder("project-");
+            projectID.Append(timestamp);
             return new ProjectCriteria
             {
-                ExtProjectID = "project" + timestamp,
+                ExtProjectID = projectID.ToString(),
                 Title = "Test Survey",
                 NotificationEmails = new string[] { "api-test@researchnow.com" },
                 Category = new Category

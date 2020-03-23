@@ -56,8 +56,8 @@ namespace Dynata.SamplifyAPIClient
         public string[] SurveyTopic { get; set; }
         [DataMember(Name = "studyType")]
         public string[] StudyType { get; set; }
-        [DataMember(Name = "studyFeatures")]
-        public string[] StudyFeatures { get; set; }
+        [DataMember(Name = "studyRequirements")]
+        public string[] studyRequirements { get; set; }
 
         void IValidator.IsValid()
         {
