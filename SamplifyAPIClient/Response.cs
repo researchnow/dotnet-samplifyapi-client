@@ -233,6 +233,13 @@ namespace Dynata.SamplifyAPIClient
     }
 
     [DataContract]
+    public class GetStudyMetadataResponse : Response
+    {
+        [DataMember(Name = "data")]
+        public StudyMetadata Data { get; set; }
+    }
+
+    [DataContract]
     public class RawResponse: Response
     {
         public byte[] Data { get; set; }
