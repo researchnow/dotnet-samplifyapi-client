@@ -18,14 +18,6 @@ namespace Dynata.SamplifyAPIClient
         public const string FeasibilityStatusProcessing = "PROCESSING";
     }
 
-    // DeliveryType values
-    public static class DeliveryTypeConstants
-    {
-        public const string Slow = "SLOW";
-        public const string Balanced = "BALANCED";
-        public const string Fast = "FAST";
-    }
-
     // OperatorType values
     public static class OperatorTypeConstants
     {
@@ -80,9 +72,9 @@ namespace Dynata.SamplifyAPIClient
         [DataMember(Name = "quotaNodes")]
         public QuotaNode[] QuotaNodes { get; set; }
         [DataMember(Name = "count")]
-        public int Count { get; set; }
+        public int? Count { get; set; }
         [DataMember(Name = "perc")]
-        public int Perc { get; set; }
+        public int? Perc { get; set; }
         [DataMember(Name = "quotaCellId")]
         public string QuotaCellID { get; set; }
     }
@@ -250,7 +242,6 @@ namespace Dynata.SamplifyAPIClient
             Validator.IsNonZero<decimal>(this.IndicativeIncidence);
             Validator.IsNonZero<int>(this.DaysInField);
             Validator.IsNonZero<int>(this.LengthOfInterview);
-            Validator.IsDeliveryTypeOrNull(this.DeliveryType);
             Validator.IsNonZero<int>(this.RequiredCompletes);
             Validator.IsNotNull(this.QuotaPlan);
             Validator.Validate(this.QuotaPlan);

@@ -85,6 +85,13 @@ namespace Dynata.SamplifyAPIClient
             return await this.RequestAndParseResponse<GetCountriesResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
 
+        // StudyMetadata
+        public async Task<GetStudyMetadataResponse> GetStudyMetadata()
+        {
+            string path = "/studyMetadata";
+            return await this.RequestAndParseResponse<GetStudyMetadataResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
+        }
+
         // Events
         public async Task<GetAllEventsResponse> GetAllEvents(QueryOptions options)
         {
@@ -265,7 +272,6 @@ namespace Dynata.SamplifyAPIClient
             Validator.IsLanguageCodeOrNull(lineItem.LanguageISOCode);
             Validator.IsUrlOrNull(lineItem.SurveyURL);
             Validator.IsUrlOrNull(lineItem.SurveyTestURL);
-            Validator.IsDeliveryTypeOrNull(lineItem.DeliveryType);
 
             string path = string.Format("/projects/{0}/lineItems/{1}", extProjectID, extLineItemID);
             return await this.RequestAndParseResponse<LineItemResponse>(HttpMethod.Post, path, lineItem).ConfigureAwait(false);

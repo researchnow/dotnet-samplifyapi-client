@@ -1,39 +1,41 @@
 ﻿using System;
+using System.Text;
 using Dynata.SamplifyAPIClient;
 
 namespace SamplifyAPIClientTest
 {
     public static class Helper
     {
+
         public static ProjectCriteria GetTestProject()
         {
+            Int32 timestamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+            StringBuilder projectID = new StringBuilder("project-");
+            projectID.Append(timestamp);
             return new ProjectCriteria
             {
-                ExtProjectID = "project001",
+                ExtProjectID = projectID.ToString(),
                 Title = "Test Survey",
                 NotificationEmails = new string[] { "api-test@researchnow.com" },
-                Exclusions = new Exclusions
-                {
-                    Type = ExclusionTypeConstants.ExclusionTypeProject,
-                    List = new string[] { "test" }
-                },
                 Category = new Category
                 {
-                    SurveyTopic = new string[] { "DESTINATIONS_TOURISM" }
+                    SurveyTopic = new string[] { "DESTINATIONS_TOURISM" },
+                    StudyType = new string[] { "ADHOC" }
                 },
-                Devices = new string[] { DeviceTypeConstants.DeviceTypeTablet, DeviceTypeConstants.DeviceTypeMobile },
+                Devices = new string[] { DeviceTypeConstants.DeviceTypeDesktop, DeviceTypeConstants.DeviceTypeTablet, DeviceTypeConstants.DeviceTypeMobile },
                 LineItems = new LineItemCriteria[] { GetTestLineItem() }
             };
         }
 
         public static LineItemCriteria GetTestLineItem()
         {
+               
             var filters = new QuotaFilters[]
             {
                 new QuotaFilters
                 {
-                    AttributeID = "4091",
-                    Options = new string[] {"3", "4"}
+                    AttributeID = "38582",
+                    Options = new string[] {"90007", "95134"}
                 }
             };
 
@@ -41,18 +43,23 @@ namespace SamplifyAPIClientTest
             {
                 new QuotaGroup
                 {
-                    Name = "Gender distribution",
+                    Name = "Age distribution",
                     QuotaCells = new QuotaCell[]
                     {
                         new QuotaCell
                         {
-                            QuotaNodes = new QuotaNode[] {new QuotaNode{AttributeID = "11", OptionIDs = new string[]{"1"}}},
+                            QuotaNodes = new QuotaNode[] {new QuotaNode{AttributeID = "13", OptionIDs = new string[]{"46-70"}}},
                             Perc=30
                         },
                         new QuotaCell
                         {
-                            QuotaNodes = new QuotaNode[] {new QuotaNode{AttributeID = "11", OptionIDs = new string[]{"2"}}},
-                            Perc=70
+                            QuotaNodes = new QuotaNode[] {new QuotaNode{AttributeID = "13", OptionIDs = new string[]{"18-45"}}},
+                            Perc=30
+                        },
+                        new QuotaCell
+                        {
+                            QuotaNodes = new QuotaNode[] {new QuotaNode{AttributeID = "13", OptionIDs = new string[]{"70-99"}}},
+                            Perc=40
                         }
                     }
                 }
@@ -66,10 +73,11 @@ namespace SamplifyAPIClientTest
                 LanguageISOCode = "en",
                 SurveyURL = "www.mysurvey.com/live/survey?pid=2424131312&k2=59931&psid=VgrJ2-9iUQZK3noVDtXobw",
                 SurveyTestURL = "www.mysurvey.com/test/survey?pid=2424131312&k2=59931&psid=VgrJ2-9iUQZK3noVDtXobw",
-                IndicativeIncidence = 20.0M,
-                DaysInField = 20,
-                LengthOfInterview = 10,
-                RequiredCompletes = 200,
+                IndicativeIncidence = 70,
+                DaysInField = 2,
+                LengthOfInterview = 5,
+                RequiredCompletes = 10,
+                DeliveryType = "BALANCED",
                 QuotaPlan = new QuotaPlan
                 {
                     Filters = filters,

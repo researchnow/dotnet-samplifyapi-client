@@ -192,17 +192,6 @@ namespace Dynata.SamplifyAPIClient
             }
         }
 
-        internal static void IsDeliveryTypeOrNull(string deliveryType)
-        {
-            if (deliveryType != null &&
-                deliveryType != DeliveryTypeConstants.Slow &&
-                deliveryType != DeliveryTypeConstants.Balanced &&
-                deliveryType != DeliveryTypeConstants.Fast)
-            {
-                throw new ValidationException(errInvalidFieldValue);
-            }
-        }
-
         internal static void IsOperatorType(string operatorType)
         {
             if (operatorType != null &&
