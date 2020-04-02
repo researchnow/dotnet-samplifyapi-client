@@ -331,7 +331,7 @@ namespace Dynata.SamplifyAPIClient
         public async Task<QuotaCellReponse> SetQuotaCellStatus(string extProjectID, string extLineItemID, string quotaCellID, string action)
         {
             Validator.IsNonEmptyString(extProjectID, extLineItemID, quotaCellID);
-            Validator.IsActionOrNull(action);
+            Validator.IsQuotaCellActionOrNull(action);
             string path = string.Format("/projects/{0}/lineItems/{1}/quotaCells/{2}/{3}", extProjectID, extLineItemID, quotaCellID, action);
             return await this.RequestAndParseResponse<QuotaCellReponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
