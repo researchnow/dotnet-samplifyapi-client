@@ -77,6 +77,8 @@ namespace Dynata.SamplifyAPIClient
         public int? Perc { get; set; }
         [DataMember(Name = "quotaCellId")]
         public string QuotaCellID { get; set; }
+        [DataMember(Name = "status")]
+        public string Status { get; set; }
     }
 
     [DataContract]
