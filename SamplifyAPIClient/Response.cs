@@ -226,6 +226,43 @@ namespace Dynata.SamplifyAPIClient
     }
 
     [DataContract]
+    public class TemplateResponse : Response
+    {
+        [DataMember(Name = "data")]
+        public TemplateData Data { get; set; }
+    }
+
+    [DataContract]
+    public class TemplateListResponse : Response
+    {
+        [DataMember(Name = "data")]
+        public TemplateData[] Data { get; set; }
+    }
+
+    [DataContract]
+    public class TemplateDeleteResponse : Response
+    {
+        [DataMember(Name = "data")]
+        public string Data { get; set; }
+    }
+
+
+    [DataContract]
+    public class TemplateData: TemplateCriteria
+    {
+        [DataMember(Name = "id")]
+        public int ID { get; set; }
+        [DataMember(Name = "editable")]
+        public bool Editable { get; set; }
+        [DataMember(Name = "createdAt")]
+        public string CreatedAt { get; set; }
+        [DataMember(Name = "updatedAt")]
+        public string UpdatedAt { get; set; }
+        [DataMember(Name = "state")]
+        public string State { get; set; }
+    }
+
+    [DataContract]
     public class GetSurveyTopicsResponse : Response
     {
         [DataMember(Name = "data")]
