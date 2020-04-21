@@ -131,7 +131,7 @@ namespace Dynata.SamplifyAPIClient
     public class QuotaCellReponse : Response
     {
         [DataMember(Name = "data")]
-        public DetailedLineItemReport Data { get; set; }
+        public QuotaCell Data { get; set; }
     }
 
     [DataContract]
