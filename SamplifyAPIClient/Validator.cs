@@ -192,6 +192,16 @@ namespace Dynata.SamplifyAPIClient
             }
         }
 
+        internal static void IsQuotaCellActionOrNull(string action)
+        {
+            if (action != null &&
+                action != ActionConstants.ActionLaunched &&
+                action != ActionConstants.ActionPaused)
+            {
+                throw new ValidationException(errInvalidFieldValue);
+            }
+        }
+
         internal static void IsOperatorType(string operatorType)
         {
             if (operatorType != null &&

@@ -48,7 +48,9 @@ namespace SamplifyAPIClientTest
                 "/attributes/GB/en",
                 "/categories/surveyTopics",
                 "/projects/test-report-id/detailedReport",
-                "/projects/test-report-id/lineItems/test-lineitem-id/detailedReport",};
+                "/projects/test-report-id/lineItems/test-lineitem-id/detailedReport",
+                "/projects/test-report-id/lineItems/test-lineitem-id/quotaCells/1/pause",
+                "/projects/test-report-id/lineItems/test-lineitem-id/quotaCells/2/launch",};
 
             SamplifyClient testClient = new MockSamplifyClient((request) =>
             {
@@ -73,7 +75,8 @@ namespace SamplifyAPIClientTest
             testClient.GetSurveyTopics(null).Wait();
             testClient.GetDetailedProjectReport("test-report-id").Wait();
             testClient.GetDetailedLineItemReport("test-report-id", "test-lineitem-id").Wait();
-
+            testClient.SetQuotaCellStatus("test-report-id", "test-lineitem-id", "1", ActionConstants.ActionPaused).Wait();
+            testClient.SetQuotaCellStatus("test-report-id", "test-lineitem-id", "2", ActionConstants.ActionLaunched).Wait();
             Assert.Equal<int>(messages.Count, tests.Length);
             for (int i = 0; i < tests.Length; i++)
             {

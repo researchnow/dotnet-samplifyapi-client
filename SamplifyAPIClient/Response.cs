@@ -128,6 +128,13 @@ namespace Dynata.SamplifyAPIClient
     }
 
     [DataContract]
+    public class QuotaCellReponse : Response
+    {
+        [DataMember(Name = "data")]
+        public QuotaCell Data { get; set; }
+    }
+
+    [DataContract]
     public class EndLinksResponse : Response
     {
         [DataMember(Name = "data")]

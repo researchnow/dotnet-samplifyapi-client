@@ -326,6 +326,15 @@ namespace Dynata.SamplifyAPIClient
             string path = string.Format("/projects/{0}/lineItems/{1}/detailedReport", extProjectID, extLineItemID);
             return await this.RequestAndParseResponse<DetailedLineItemReportResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
+      
+        //SetQuotaCellStatus
+        public async Task<QuotaCellReponse> SetQuotaCellStatus(string extProjectID, string extLineItemID, string quotaCellID, string action)
+        {
+            Validator.IsNonEmptyString(extProjectID, extLineItemID, quotaCellID);
+            Validator.IsQuotaCellActionOrNull(action);
+            string path = string.Format("/projects/{0}/lineItems/{1}/quotaCells/{2}/{3}", extProjectID, extLineItemID, quotaCellID, action);
+            return await this.RequestAndParseResponse<QuotaCellReponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
+        }
 
         //Targeting templates
         public async Task<TemplateListResponse> GetTemplateList(string country, string lang, QueryOptions options)
@@ -359,7 +368,7 @@ namespace Dynata.SamplifyAPIClient
             string path = string.Format("/templates/quotaPlan/{0}", id);
             return await this.RequestAndParseResponse<TemplateDeleteResponse>(HttpMethod.Delete, path, null).ConfigureAwait(false);
         }
-
+      
         //Auth
         public async Task<bool> RefreshToken()
         {
