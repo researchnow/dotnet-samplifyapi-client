@@ -326,7 +326,7 @@ namespace Dynata.SamplifyAPIClient
             string path = string.Format("/projects/{0}/lineItems/{1}/detailedReport", extProjectID, extLineItemID);
             return await this.RequestAndParseResponse<DetailedLineItemReportResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
-
+      
         //SetQuotaCellStatus
         public async Task<QuotaCellReponse> SetQuotaCellStatus(string extProjectID, string extLineItemID, string quotaCellID, string action)
         {
@@ -336,7 +336,39 @@ namespace Dynata.SamplifyAPIClient
             return await this.RequestAndParseResponse<QuotaCellReponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
 
+        //Targeting templates
+        public async Task<TemplateListResponse> GetTemplateList(string country, string lang, QueryOptions options)
+        {
+            Validator.IsNonEmptyString(country);
+            Validator.IsNonEmptyString(lang);
+            string query = "";
+            if (options != null)
+            {
+                query = options.ToString();
+            }
+            string path = string.Format("/templates/quotaPlan/{0}/{1}{2}", country, lang, query);
+            return await this.RequestAndParseResponse<TemplateListResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
+        }
 
+        public async Task<TemplateResponse> CreateTemplate(TemplateCriteria template)
+        {
+            Validator.IsNotNull(template);
+            Validator.Validate(template);
+            return await this.RequestAndParseResponse<TemplateResponse>(HttpMethod.Post, "/templates/quotaPlan", template).ConfigureAwait(false);
+        }
+
+        public async Task<TemplateResponse> UpdateTemplate(int id, TemplateCriteria template)
+        {
+            string path = string.Format("/templates/quotaPlan/{0}", id);
+            return await this.RequestAndParseResponse<TemplateResponse>(HttpMethod.Post, path, template).ConfigureAwait(false);
+        }
+
+        public async Task<TemplateDeleteResponse> DeleteTemplate(int id)
+        {
+            string path = string.Format("/templates/quotaPlan/{0}", id);
+            return await this.RequestAndParseResponse<TemplateDeleteResponse>(HttpMethod.Delete, path, null).ConfigureAwait(false);
+        }
+      
         //Auth
         public async Task<bool> RefreshToken()
         {
