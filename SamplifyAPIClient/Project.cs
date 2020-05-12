@@ -215,8 +215,6 @@ namespace Dynata.SamplifyAPIClient
         public int CompletesRefused { get; set; }
         [DataMember(Name = "currency")]
         public string Currency { get; set; }
-        [DataMember(Name = "extProjectId")]
-        public string ExtProjectId { get; set; }
         [DataMember(Name = "incompletes")]
         public int Incompletes { get; set; }
         [DataMember(Name = "title")]
