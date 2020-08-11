@@ -238,8 +238,8 @@ namespace Dynata.SamplifyAPIClient
             Validator.IsCountryCodeOrNull(this.CountryISOCode);
             Validator.IsLanguageCodeOrNull(this.LanguageISOCode);
             Validator.IsUrlOrNull(this.SurveyURL);
-            Validator.ValidateUrlLength(this.SurveyURL);            
             Validator.IsUrlOrNull(this.SurveyTestURL);
+            Validator.ValidateUrlLength(this.SurveyURL);
             Validator.IsNonZero<decimal>(this.IndicativeIncidence);
             Validator.IsNonZero<int>(this.DaysInField);
             Validator.IsNonZero<int>(this.LengthOfInterview);
