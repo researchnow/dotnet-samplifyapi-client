@@ -179,6 +179,7 @@ namespace Dynata.SamplifyAPIClient
             Validator.IsNonEmptyString(this.SurveyURL);
             Validator.IsUrlOrNull(this.SurveyURL);
             Validator.IsNonEmptyString(this.SurveyTestURL);
+            Validator.ValidateUrlLength(this.SurveyURL);
             Validator.IsUrlOrNull(this.SurveyTestURL);
         }
     }

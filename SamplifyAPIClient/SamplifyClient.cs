@@ -271,6 +271,7 @@ namespace Dynata.SamplifyAPIClient
             Validator.IsCountryCodeOrNull(lineItem.CountryISOCode);
             Validator.IsLanguageCodeOrNull(lineItem.LanguageISOCode);
             Validator.IsUrlOrNull(lineItem.SurveyURL);
+            Validator.ValidateUrlLength(lineItem.SurveyURL);
             Validator.IsUrlOrNull(lineItem.SurveyTestURL);
 
             string path = string.Format("/projects/{0}/lineItems/{1}", extProjectID, extLineItemID);
