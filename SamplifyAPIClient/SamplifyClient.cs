@@ -310,6 +310,59 @@ namespace Dynata.SamplifyAPIClient
             return await this.RequestAndParseResponse<GetUserInfoResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
 
+        // GetCompanyUsers
+        public async Task<GetCompanyUsersResponse> GetCompanyUsers(QueryOptions options)
+        {
+            string query = "";
+            if (options != null)
+            {
+                query = options.ToString();
+            }
+            string path = string.Format("/users{0}", query);
+            return await this.RequestAndParseResponse<GetCompanyUsersResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
+        }
+
+        // GetCompanyTeams
+        public async Task<GetCompanyTeamsResponse> GetCompanyTeams(QueryOptions options)
+        {
+            string query = "";
+            if (options != null)
+            {
+                query = options.ToString();
+            }
+            string path = string.Format("/teams{0}", query);
+            return await this.RequestAndParseResponse<GetCompanyTeamsResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
+        }
+
+        // GetRoles
+        public async Task<GetRolesResponse> GetRoles(QueryOptions options)
+        {
+            string query = "";
+            if (options != null)
+            {
+                query = options.ToString();
+            }
+            string path = string.Format("/roles{0}", query);
+            return await this.RequestAndParseResponse<GetRolesResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
+        }
+
+        // GetProjectPermissions
+        public async Task<GetProjectPermissionsResponse> GetProjectPermissions(string extProjectID)
+        {
+            Validator.IsNonEmptyString(extProjectID);
+            string path = string.Format("projects/{0}/permissions", extProjectID);
+            return await this.RequestAndParseResponse<GetProjectPermissionsResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
+        }
+
+        // UpsertProjectPermissions
+        public async Task<UpsertProjectPermissionsResponse> UpsertProjectPermissions(string extProjectID, UpsertPermissionsCriteria upsertPermissions)
+        {
+            Validator.IsNotNull(upsertPermissions);
+            Validator.Validate(upsertPermissions);
+            string path = string.Format("projects/{0}/permissions", extProjectID);
+            return await this.RequestAndParseResponse<UpsertProjectPermissionsResponse>(HttpMethod.Get, path, upsertPermissions).ConfigureAwait(false);
+        }
+
         //GetDetailedProjectReport
         public async Task<DetailedProjectReportResponse> GetDetailedProjectReport(string extProjectID)
         {

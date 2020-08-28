@@ -233,6 +233,41 @@ namespace Dynata.SamplifyAPIClient
     }
 
     [DataContract]
+    public class GetCompanyUsersResponse : Response
+    {
+        [DataMember(Name = "data")]
+        public CompanyUsers[] Data { get; set; }
+    }
+
+    [DataContract]
+    public class GetCompanyTeamsResponse : Response
+    {
+        [DataMember(Name = "data")]
+        public Team[] Data { get; set; }
+    }
+
+    [DataContract]
+    public class GetRolesResponse : Response
+    {
+        [DataMember(Name = "data")]
+        public Roles Data { get; set; }
+    }
+
+    [DataContract]
+    public class GetProjectPermissionsResponse : Response
+    {
+        [DataMember(Name = "data")]
+        public ProjectPermissions Data { get; set; }
+    }
+
+    [DataContract]
+    public class UpsertProjectPermissionsResponse : Response
+    {
+        [DataMember(Name = "data")]
+        public ProjectPermissions Data { get; set; }
+    }
+
+    [DataContract]
     public class TemplateResponse : Response
     {
         [DataMember(Name = "data")]
