@@ -2,6 +2,13 @@ using System.Runtime.Serialization;
 
 namespace Dynata.SamplifyAPIClient
 {
+    // TeamStatusConstants values for status of the team.
+    public static class TeamStatusConstants
+    {
+        public const string StatusActive = "ACTIVE";
+        public const string StatusInactive = "INACTIVE";
+    }
+
     [DataContract]
     public class Team
     {
@@ -14,7 +21,7 @@ namespace Dynata.SamplifyAPIClient
         [DataMember(Name = "description")]
         public string Description { get; set; }
         [DataMember(Name = "status")]
-        public string Status { get; set; }
+        public TeamStatusConstants Status { get; set; }
         [DataMember(Name = "createdAt")]
         public string RawDTStringCreatedAt;
         [DataMember(Name = "updatedAt")]
