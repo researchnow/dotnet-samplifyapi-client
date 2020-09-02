@@ -29,11 +29,11 @@ namespace Dynata.SamplifyAPIClient
         [DataMember(Name = "defaultRole")]
         public string DefaultRole { get; set; }
         [DataMember(Name = "teams")]
-        public Team[] Teams { get; set; }
+        public CompanyTeam[] Teams { get; set; }
     }
 
     [DataContract]
-    public class Team
+    public class CompanyTeam
     {
         [DataMember(Name = "id")]
         public int ID { get; set; }

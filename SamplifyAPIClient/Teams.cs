@@ -15,5 +15,14 @@ namespace Dynata.SamplifyAPIClient
         public string Description { get; set; }
         [DataMember(Name = "status")]
         public string Status { get; set; }
+        [DataMember(Name = "createdAt")]
+        public string RawDTStringCreatedAt;
+        [DataMember(Name = "updatedAt")]
+        public string RawDTStringUpdatedAt;
+
+        [IgnoreDataMember]
+        public DateTime? CreatedAt => Util.ConvertToDateTimeNullable(RawDTStringCreatedAt);
+        [IgnoreDataMember]
+        public DateTime? UpdatedAt => Util.ConvertToDateTimeNullable(RawDTStringUpdatedAt);
     }
 }
