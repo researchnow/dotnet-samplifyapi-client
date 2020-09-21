@@ -39,7 +39,7 @@ namespace Dynata.SamplifyAPIClient
         [DataMember(Name = "id")]
         public int ID { get; set; }
         [DataMember(Name = "name")]
-        public string Username { get; set; }
+        public string Name { get; set; }
     }
 
     // UpsertPermissionsCriteria has the fields insert or update the project permissions.

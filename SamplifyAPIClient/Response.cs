@@ -250,7 +250,7 @@ namespace Dynata.SamplifyAPIClient
     public class GetRolesResponse : Response
     {
         [DataMember(Name = "data")]
-        public Roles Data { get; set; }
+        public Roles[] Data { get; set; }
     }
 
     [DataContract]

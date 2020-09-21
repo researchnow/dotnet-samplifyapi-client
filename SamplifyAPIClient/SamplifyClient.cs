@@ -306,7 +306,7 @@ namespace Dynata.SamplifyAPIClient
             {
                 query = options.ToString();
             }
-            string path = string.Format("/users/info{0}", query);
+            string path = string.Format("/user", query);
             return await this.RequestAndParseResponse<GetUserInfoResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
 
