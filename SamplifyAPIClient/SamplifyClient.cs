@@ -350,7 +350,7 @@ namespace Dynata.SamplifyAPIClient
         public async Task<GetProjectPermissionsResponse> GetProjectPermissions(string extProjectID)
         {
             Validator.IsNonEmptyString(extProjectID);
-            string path = string.Format("projects/{0}/permissions", extProjectID);
+            string path = string.Format("/projects/{0}/permissions", extProjectID);
             return await this.RequestAndParseResponse<GetProjectPermissionsResponse>(HttpMethod.Get, path, null).ConfigureAwait(false);
         }
 
@@ -359,8 +359,8 @@ namespace Dynata.SamplifyAPIClient
         {
             Validator.IsNotNull(upsertPermissions);
             Validator.Validate(upsertPermissions);
-            string path = string.Format("projects/{0}/permissions", extProjectID);
-            return await this.RequestAndParseResponse<UpsertProjectPermissionsResponse>(HttpMethod.Get, path, upsertPermissions).ConfigureAwait(false);
+            string path = string.Format("/projects/{0}/permissions", extProjectID);
+            return await this.RequestAndParseResponse<UpsertProjectPermissionsResponse>(HttpMethod.Post, path, upsertPermissions).ConfigureAwait(false);
         }
 
         //GetDetailedProjectReport

@@ -63,14 +63,14 @@ namespace Dynata.SamplifyAPIClient
     public class TeamPermission
     {
         [DataMember(Name = "id")]
-        public int[] ID { get; set; }
+        public int ID { get; set; }
     }
 
     [DataContract]
     public class UserPermission
     {
         [DataMember(Name = "id")]
-        public int[] ID { get; set; }
+        public int ID { get; set; }
         [DataMember(Name = "role")]
         public string Role { get; set; }
     }

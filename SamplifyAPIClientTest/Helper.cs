@@ -27,16 +27,42 @@ namespace SamplifyAPIClientTest
             };
         }
 
+        public static UpsertPermissionsCriteria UpdatePermissions(String ExtProjID)
+        {
+            var users = new UserPermission[]
+            {
+                new UserPermission
+                {
+                    ID = 3,
+                    Role = "SAMPLE_MANAGER",
+                }
+            };
+
+            var teams = new TeamPermission[]
+            {
+                new TeamPermission
+                {
+                    ID = 109,
+                }
+            };
+            return new UpsertPermissionsCriteria
+            {
+                ExtProjectID = ExtProjID,
+                UserPermissions = users,
+                TeamPermissions = teams
+            };
+        }
+
         public static LineItemCriteria GetTestLineItem()
         {
                
             var filters = new QuotaFilters[]
             {
-                new QuotaFilters
-                {
-                    AttributeID = "38582",
-                    Options = new string[] {"90007", "95134"}
-                }
+                //new QuotaFilters
+                //{
+                //    AttributeID = "11",
+                //    Options = new string[] {"90007", "95134"}
+                //}
             };
 
             var quotaGroups = new QuotaGroup[]
